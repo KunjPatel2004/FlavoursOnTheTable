@@ -9,6 +9,17 @@ class Admin extends Authenticatable
 {
     protected $guard = 'admin';
 
+    public function isCook(){
+        return $this->role ==='cook';
+    }
+    public function isAdmin(){
+        return $this->role ==='admin';
+    }
+
+    public function isCustomer(){
+        return $this->role ==='customer';
+    }
+
     protected $fillable = [
         'name',
         'email',

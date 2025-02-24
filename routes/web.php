@@ -10,8 +10,9 @@ Route::get('/', function () {
     
 
 Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function(){
-
-    Route::match(['get','post'],'login','AuthController@login'); 
+    
+    Route::match(['get','post'],'login','AuthController@login');
+    Route::match(['get','post'],'register','AuthController@register');
     Route::group(['middleware'=> ['admin']],function(){          //To protect the routes form opening without login
         Route::get('logout',"AuthController@logout");
         Route::get('dashboard','AdminController@dashboard');
@@ -25,8 +26,8 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
 
 
         //Cook Controller
-        Route::match(['get','post'],'cook_dashboard','CookController@cookdashboard');
-        Route::match(['get','post'],"add-edit-food-item/{id?}",'CookController@add_edit_fooditem');
+        Route::match(['get','post'],'food_items','CookController@Food_items');
+        Route::match(['get','post'],"add-edit-food-item/{id?}",'CookController@Add_edit_fooditem');
         
 
      });

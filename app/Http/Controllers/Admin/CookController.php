@@ -13,16 +13,16 @@ use Hash;
 
 class CookController extends Controller
 {
-    public function cookdashboard() {
+    public function Food_items() {
         // $foods = Food::where('cook_id', auth()->id())->get();
-        Session::put('page','cook_dashboard');
-        $Fooditem = FoodItem::get()->toArray();
-        return view('admin.cook.cook_dashboard')->with(compact('Fooditem'));
+        Session::put('page','food_item');
+        $Fooditem = FoodItem::where('cook_id',auth('admin')->id())->get();
+        return view('admin.cook.food_items')->with(compact('Fooditem'));
     }
 
    
-    public function add_edit_fooditem(Request $request,$id=null){
-        Session::put('page','cook_dashboard');
+    public function Add_edit_fooditem(Request $request,$id=null){
+        Session::put('page','food_item');
         if($id==""){
             $title = "Add Food Item";
             $fooditempage = new FoodItem;
@@ -73,7 +73,7 @@ class CookController extends Controller
             $fooditempage->image = $data['image'];
             $fooditempage->status = $data['status'];
             $fooditempage->save();
-            return redirect('admin/cook_dashboard')->with('success message',$message);
+            return redirect('admin/food_items')->with('success message',$message);
         }
         return view('admin.cook.add_edit_fooditems')->with(compact('title','fooditempage'));
     }

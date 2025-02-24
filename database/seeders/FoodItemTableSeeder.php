@@ -15,7 +15,7 @@ class FoodItemTableSeeder extends Seeder
     {
         $foodItemsRecords=[
             ['id'=>1,'cook_id'=>'2','name'=>'Pizza','description'=>'Content is coming soon','price'=>200,
-            'image'=>'','status'=>'Available'],
+            'image'=>'','status'=>'Available','actions'=>1],
         ];
 
         FoodItem::insert($foodItemsRecords);

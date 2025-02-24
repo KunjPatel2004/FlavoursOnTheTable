@@ -27,6 +27,7 @@
             <th>Description</th>
             <th>Price</th>
             <th>Availability</th>
+            <th>Actions</th>
         </tr>
        </thead>
        <tbody>
@@ -38,6 +39,7 @@
             <td>{{$page['description']}}</td>
             <td>{{$page['price']}}</td>
             <td>{{$page['status']}}</td>
+            <td>{{$page['actions']}}</td>
         </tr>
             @endforeach
     </tbody>

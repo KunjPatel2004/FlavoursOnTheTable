@@ -122,16 +122,16 @@
             </a>
         </li>
 
-        @if(Session::get('page')=="cook_dashboard")
+        @if(Session::get('page')=="food_item")
               @php $active = "active" @endphp
             @else
               @php $active="" @endphp
           @endif
           <li class="nav-item">
-            <a href="{{url('admin/cook_dashboard')}}" class="nav-link {{$active}}">
+            <a href="{{url('admin/food_items')}}" class="nav-link {{$active}}">
               <i class="nav-icon fas fa-edit"></i>
               <p>
-                Orders
+                Food Items
               </p>
             </a>
         </li>

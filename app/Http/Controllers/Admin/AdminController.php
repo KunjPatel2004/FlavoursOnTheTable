@@ -21,7 +21,6 @@ class AdminController extends Controller
 
     public function UpdatePassword(Request $request){
         Session::put('page','update_password');
-
         if($request->isMethod('post')){
             $data = $request->all();
             //Check if current password is correct
@@ -103,9 +102,11 @@ class AdminController extends Controller
 
     public function CookDetails(){
         Session::put('page','cook_details');
+        
         $cookdetails = Admin::where('role','cook')->get();
+        // $adminview = Admin::where('role',auth('admin')->id())->get();
         return view('admin.manage_cook')->with(compact('cookdetails'));
-     
+    
     }
 
     public function UpdateCustomerDetails(){
