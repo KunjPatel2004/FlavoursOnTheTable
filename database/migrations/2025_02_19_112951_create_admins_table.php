@@ -19,6 +19,10 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('image');
+            $table->string('home_address');
+            $table->string('work_address');
+            $table->string('address_1');
+            $table->string('address_2');
             $table->tinyInteger('status');
             $table->timestamps();
         });

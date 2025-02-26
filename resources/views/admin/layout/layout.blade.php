@@ -89,5 +89,22 @@
 <script src="{{url('admin/js/pages/dashboard.js')}}"></script>
 <!--Custom JS-->
 <script src="{{url('admin/js/custom.js')}}"></script>
+
+<!-- DataTables & Plugins -->
+<script src="{{url('admin/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+<script src="{{url('admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
+<script src="{{url('admin/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
+<!-- <script>
+  $(function () {
+    $("#cmspages").DataTable();
+    $("#admins").DataTable();
+  });
+</script>  -->
+
+<script src="{{url('admin/plugins/select2/js/select2.full.min.js')}}"></script>
+<script>
+   $('.select2').select2();
+</script> 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>

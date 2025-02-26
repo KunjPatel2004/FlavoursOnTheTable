@@ -100,7 +100,7 @@
               @php $active="" @endphp
           @endif
           <li class="nav-item">
-            <a href="{{url('admin/update-customer-details')}}" class="nav-link {{$active}}">
+            <a href="{{url('admin/customer-details')}}" class="nav-link {{$active}}">
               <i class="nav-icon fas fa-edit"></i>
               <p>
                 Manage Customers
@@ -108,13 +108,27 @@
             </a>
         </li>
 
-        @if(Session::get('page')=="monitor_order")
+        @if(Session::get('page')=="manage_order")
               @php $active = "active" @endphp
             @else
               @php $active="" @endphp
           @endif
           <li class="nav-item">
-            <a href="{{url('admin/monitor_orders')}}" class="nav-link {{$active}}">
+            <a href="{{url('admin/manage_order')}}" class="nav-link {{$active}}">
+              <i class="nav-icon fas fa-edit"></i>
+              <p>
+               Manage Orders
+              </p>
+            </a>
+        </li>
+
+        @if(Session::get('page')=="order_statistics")
+              @php $active = "active" @endphp
+            @else
+              @php $active="" @endphp
+          @endif
+          <li class="nav-item">
+            <a href="{{url('admin/order_statistics')}}" class="nav-link {{$active}}">
               <i class="nav-icon fas fa-edit"></i>
               <p>
                 Order Statistics

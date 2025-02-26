@@ -105,18 +105,65 @@ class AdminController extends Controller
         
         $cookdetails = Admin::where('role','cook')->get();
         // $adminview = Admin::where('role',auth('admin')->id())->get();
-        return view('admin.manage_cook')->with(compact('cookdetails'));
+        return view('admin.cook.manage_cook')->with(compact('cookdetails'));
     
     }
 
-    public function UpdateCustomerDetails(){
+    public function CustomerDetails(){
         Session::put('page','manage_customer');
-        return view('admin.manage_customers');
-
+        $customerdetails= Admin::where('role','customer')->get();
+        return view('admin.customer.manage_customers')->with(compact('customerdetails'));
     }
-    public function Monitor_Order(){
-        Session::put('page','monitor_order');
-        return view('admin.monitor_orders');
+
+    public function updatecustomerstatus(Request $request){
+        if($request->ajax()){
+            $data = $request->all();
+            // echo "<prev>"; print_r($data); die;
+            if($data['status']=="Active"){
+                $status = 0;
+            }else{
+                $status= 1;
+            }
+            Admin::where('id',$data['page_id'])->update(['status'=>$status]);
+            return response()->json(['status'=>$status,'page_id'=>$data['page_id']]);
+        }
+    }
+
+    public function edit_customerdetails(Request $request,$id=null){
+        Session::put('page','customer_detail');
+        
+            $title = "Edit Customer Details";
+            $customerpage = Admin::find($id);             //Takes current CMS Page data for updation
+            $message = "Customer detail updated successfully";
+    
+
+        // $request->validate($rules,$customMessages)
+        if($request->isMethod('post')){
+            $data = $request->all();
+            //  echo "<prev>"; print_r($data); die;
+            
+            $customerpage->name = $data['name'];
+            $customerpage->email = $data['email'];
+            $customerpage->mobile = $data['mobile'];
+            $customerpage->home_address = $data['home_address'];
+            $customerpage->work_address = $data['work_address'];
+            $customerpage->address_1 = $data['address_1'];
+            $customerpage->address_2 = $data['address_2'];
+            $customerpage->save();
+            return redirect('admin/customer-details')->with('success message',$message);
+        }
+        return view('admin.customer.add_edit_customerdetail')->with(compact('title','customerpage'));
+    }
+
+
+    public function delete_customer($id){
+            Admin::where('id',$id)->delete();
+            return redirect()->back()->with('success message','Customer deleted successfully!');
+        }
+    
+    public function Order_statistics(){
+        Session::put('page','order_statistics');
+        return view('admin.order.order_statistics');
 
     }
 }

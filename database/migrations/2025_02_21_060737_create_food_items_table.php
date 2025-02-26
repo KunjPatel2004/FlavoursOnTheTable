@@ -19,7 +19,6 @@ return new class extends Migration
             $table->decimal('price',8,2);
             $table->String('image');
             $table->enum('status',['available','unavailable'])->default('available');
-            $table->tinyInteger('actions');
             $table->timestamps();
 
             $table->foreign('cook_id')->references('id')->on('admins')->onDelete('cascade');
