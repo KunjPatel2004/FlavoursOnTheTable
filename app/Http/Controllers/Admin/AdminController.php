@@ -100,17 +100,8 @@ class AdminController extends Controller
         return view('admin.update_details');
     }
 
-    public function CookDetails(){
-        Session::put('page','cook_details');
-        
-        $cookdetails = Admin::where('role','cook')->get();
-        // $adminview = Admin::where('role',auth('admin')->id())->get();
-        return view('admin.cook.manage_cook')->with(compact('cookdetails'));
-    
-    }
-
     public function CustomerDetails(){
-        Session::put('page','manage_customer');
+        Session::put('page','customer_details');
         $customerdetails= Admin::where('role','customer')->get();
         return view('admin.customer.manage_customers')->with(compact('customerdetails'));
     }
@@ -130,25 +121,30 @@ class AdminController extends Controller
     }
 
     public function edit_customerdetails(Request $request,$id=null){
-        Session::put('page','customer_detail');
-        
+        Session::put('page','customer_details');
+        if($id==""){
+            $title = "Add New Customer";
+            $customerpage = new Admin;             
+            $message = "Customer added successfully";
+        }else{
             $title = "Edit Customer Details";
-            $customerpage = Admin::find($id);             //Takes current CMS Page data for updation
+            $customerpage = Admin::find($id);            
             $message = "Customer detail updated successfully";
-    
+        }
 
-        // $request->validate($rules,$customMessages)
         if($request->isMethod('post')){
             $data = $request->all();
-            //  echo "<prev>"; print_r($data); die;
-            
+        
             $customerpage->name = $data['name'];
             $customerpage->email = $data['email'];
+            $customerpage->role = $data['role'];   
+            $customerpage->password = $data['password'];   
             $customerpage->mobile = $data['mobile'];
             $customerpage->home_address = $data['home_address'];
             $customerpage->work_address = $data['work_address'];
             $customerpage->address_1 = $data['address_1'];
             $customerpage->address_2 = $data['address_2'];
+            $customerpage->status = $data['status'];   
             $customerpage->save();
             return redirect('admin/customer-details')->with('success message',$message);
         }
@@ -160,7 +156,41 @@ class AdminController extends Controller
             Admin::where('id',$id)->delete();
             return redirect()->back()->with('success message','Customer deleted successfully!');
         }
-    
+
+        
+    public function CookDetails(){
+        Session::put('page','cook_details');
+        
+        $cookdetails = Admin::where('role','cook')->get();
+        return view('admin.cook.manage_cook')->with(compact('cookdetails'));
+    }
+
+    public function add_edit_cookdetails(Request $request,$id=null){
+        Session::put('page','cook_details');
+        if($id==""){
+            $title = "Add New Cook";
+            $cookpage = new Admin;            
+            $message = "Cook added successfully";
+        }else{
+            $title = "Edit Cook Details";
+            $cookpage = Admin::find($id);             
+            $message = "Cook details updated successfully";
+        }
+
+        if($request->isMethod('post')){
+            $data = $request->all(); 
+            $cookpage->name = $data['name'];
+            $cookpage->email = $data['email'];
+            $cookpage->role = $data['role'];   
+            $cookpage->password = $data['password']; 
+            $cookpage->mobile = $data['mobile'];
+            $cookpage->home_address = $data['address'];
+            $cookpage->status = $data['status'];   
+            $cookpage->save();
+            return redirect('admin/cook-details')->with('success message',$message);
+        }
+        return view('admin.cook.add_edit_cookdetail')->with(compact('title','cookpage'));
+    }
     public function Order_statistics(){
         Session::put('page','order_statistics');
         return view('admin.order.order_statistics');

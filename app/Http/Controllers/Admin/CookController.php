@@ -85,7 +85,7 @@ class CookController extends Controller
     }
    
     public function Manage_Orders(){
-        Session::put('page','manage_order');
+        Session::put('page','manage_orders');
         return view('admin.order.manage_orders');
     }
 }

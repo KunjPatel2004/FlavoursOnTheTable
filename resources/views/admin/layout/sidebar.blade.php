@@ -94,7 +94,7 @@
             </a>
         </li>
 
-          @if(Session::get('page')=="manage_customer")
+          @if(Session::get('page')=="customer_details")
               @php $active = "active" @endphp
             @else
               @php $active="" @endphp
@@ -108,7 +108,7 @@
             </a>
         </li>
 
-        @if(Session::get('page')=="manage_order")
+        @if(Session::get('page')=="manage_orders")
               @php $active = "active" @endphp
             @else
               @php $active="" @endphp

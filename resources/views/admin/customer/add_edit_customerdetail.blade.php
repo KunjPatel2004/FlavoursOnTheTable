@@ -10,12 +10,6 @@
           <div class="col-sm-6">
             <h1>{{ $title }}</h1>
           </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">{{ $title }}</li>
-            </ol>
-          </div>
         </div>
       </div><!-- /.container-fluid -->
     </section>
@@ -31,9 +25,6 @@
             <div class="card-tools">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
                 <i class="fas fa-minus"></i>
-              </button>
-              <button type="button" class="btn btn-tool" data-card-widget="remove">
-                <i class="fas fa-times"></i>
               </button>
             </div>
           </div>
@@ -51,8 +42,10 @@
            </div>
           @endif
         
-              <form name="customerdetailform" id="customerdetailform" 
-               action="{{url('admin/edit-customer-details/'.$customerpage['id'])}}" method="post">@csrf
+              <form name="customerdetailform" id="customerdetailform"
+              @if(empty($customerpage->id)) action="{{url('admin/add-edit-customer-details')}}"
+               @else  action="{{url('admin/add-edit-customer-details/'.$customerpage['id'])}}"
+               @endif method="post">@csrf
                 
                 <div class="card-body">
                   <div class="form-group col-md-6">
@@ -63,10 +56,24 @@
 
                   <div class="form-group col-md-6">
                     <label for="email">Email</label>
-                    <input type="text" class="form-control" id="email" name="email" readonly=""
+                    <input type="text" class="form-control" id="email" name="email"
                     value="{{$customerpage['email']}}">
                   </div>
 
+                  @if(empty($customerpage->id))
+                  <div class="form-group col-md-6">
+                    <label for="role">Role</label>
+                    <input type="text" class="form-control" id="role" name="role" 
+                   @if(empty($customerpage->role)) value="customer" readonly="" @endif>
+                  </div>
+
+                 
+                  <div class="form-group col-md-6">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" 
+                     value="{{$customerpage['password']}}" >
+                  </div>
+                 @endif
                   <div class="form-group col-md-6">
                     <label for="mobile">Mobile</label>
                     <input type="text" class="form-control" id="mobile" name="mobile" 
@@ -84,24 +91,29 @@
                     <input type="text" class="form-control" id="work_address" name="work_address" 
                      value="{{$customerpage['work_address']}}" >
                   </div>
-
-                  <div class="form-group col-md-6">
+                <div class="form-group col-md-6"> 
                     <label for="address_1">Address_1</label>
                     <input type="text" class="form-control" id="address_1" name="address_1" 
-                     value="{{$customerpage['address_1']}}" >
-                  </div>
+                    value="{{$customerpage['address_1']}}"  >
+                </div>
 
                   <div class="form-group col-md-6">
                     <label for="address_2">Address_2</label>
                     <input type="text" class="form-control" id="address_2" name="address_2" 
                      value="{{$customerpage['address_2']}}" >
                   </div>
+
+                  <div class="form-group col-md-6">
+                    <label for="status">Status</label>
+                    <input type="text" class="form-control" id="status" name="status" 
+                     value="{{$customerpage['status']}}" >
+                  </div>
+
+                  <div class="form-group col-md-6">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
                 </div>
                 <!-- /.card-body -->
-
-                <div >
-                  <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
               </form>
                 <!-- /.form-group -->
               </div>

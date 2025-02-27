@@ -68,8 +68,8 @@
 <!-- Sparkline -->
 <script src="{{url('admin/plugins/sparklines/sparkline.js')}}"></script>
 <!-- JQVMap -->
-<script src="{{url('admin/plugins/jqvmap/jquery.vmap.min.js')}}"></script>
-<script src="{{url('admin/plugins/jqvmap/maps/jquery.vmap.usa.js')}}"></script>
+<!-- <script src="{{url('admin/plugins/jqvmap/jquery.vmap.min.js')}}"></script>
+<script src="{{url('admin/plugins/jqvmap/maps/jquery.vmap.usa.js')}}"></script> -->
 <!-- jQuery Knob Chart -->
 <script src="{{url('admin/plugins/jquery-knob/jquery.knob.min.js')}}"></script>
 <!-- daterangepicker -->

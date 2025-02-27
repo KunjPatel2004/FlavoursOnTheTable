@@ -4,12 +4,9 @@
 <div class="content-wrapper"> 
     <div class="content-header">
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">Manage Customer</h1>
-                </div>
-                
-            </div>
+        <h1 class="mt-3">Manage Customer
+            <a href="{{url('admin/add-edit-customer-details')}}" class="btn btn-success float-right">Add Customer</a>
+            </h1>   
         </div>
     </div>
     
@@ -70,7 +67,7 @@
                                 <i class="fas fa-trash "></i></a>
                                 
                                 &nbsp; &nbsp; 
-                                <a href="{{url('admin/edit-customer-details/'.$detail['id'])}}" style="color:#3f6ed3">View details</a>
+                                <a href="{{url('admin/add-edit-customer-details/'.$detail['id'])}}" style="color:#3f6ed3">View details</a>
                             </tr>
 
                             @endforeach

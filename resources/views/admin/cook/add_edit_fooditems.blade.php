@@ -68,8 +68,7 @@
                   </div>
                   <div class="form-group col-md-6">
                     <label for="description">Description</label>
-                    <textarea class="form-control" rows="3" id="description" name="description">
-                    @if(!empty($fooditempage['description'])) {{$fooditempage['description']}} @endif</textarea>
+                    <textarea class="form-control" rows="3" id="description" name="description">@if(!empty($fooditempage['description'])) {{$fooditempage['description']}} @endif</textarea>
                   </div>
                   <div class="form-group col-md-6">
                     <label for="price">Price</label>
@@ -79,10 +78,10 @@
                   <div class="form-group col-md-6">
                     <label for="admin_image">Image</label>
                     <input type="file" name="admin_image" class="form-control" id="admin_image">
-                    <!-- @if(!empty($fooditempage['image']))
-                      <a target= "_blank" href="{{url('admin/images/fooditems/'.FoodItem::where('image',auth('admin')->id())->get())}}">View Image</a>
-                      <input type="hidden" name="current_image" value="{{FoodItem::where('image',auth('admin')->id())->get()}}">
-                      @endif  -->
+                    @if(!empty($fooditempage['image']))
+                      <a target= "_blank" href="{{url('admin/images/fooditems/'.$fooditempage['image'])}}">View Image</a>
+                      <input type="hidden" name="current_image" value="{{$fooditempage['image']}}">
+                      @endif 
                   </div> 
                   <div class="form-group col-md-6">
                   <label for="status">Status</label>
@@ -91,12 +90,12 @@
                     <option>Unavailable</option>
                   </select>
                   </div>
-                </div>
-                <!-- /.card-body -->
-
-                <div >
+                  <div class="form-group col-md-10">
                   <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
+                </div>
+                <!-- /.card-body -->
+                
               </form>
                 <!-- /.form-group -->
               </div>

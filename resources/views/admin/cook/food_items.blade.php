@@ -3,8 +3,12 @@
 
 
 <div class="content-wrapper"> 
-<div class="container-fluid">
-    <h2>Cook Dashboard</h2>
+  <div class="container-fluid">
+    <div class="content-header">
+    <h2 class="mt-3">Your Food Listings
+      <a href="{{url('admin/add-edit-food-item')}}" class="btn btn-success float-right">Add New Food Item</a>
+    </h2>
+    </div> 
    
   
     @if(Session::has('success message'))
@@ -15,16 +19,13 @@
               </button>
              </div>
           @endif
-   
-    <h3 class="mt-4">Your Food Listings
-      <a href="{{url('admin/add-edit-food-item')}}" class="btn btn-success float-right">Add New Food Item</a>
-    </h3> 
-
+       
+   <!-- Main Content -->
     <div class="card">
     <div class="card-body">
-    <table id="ordertable" class="table table-bordered table-striped">
+      <table id="ordertable" class="table table-bordered table-striped">
         <thead>
-        <tr>
+          <tr>
             <th>ID</th>
             <th>Cook ID</th>
             <th>Food Name</th>
@@ -33,11 +34,11 @@
             <th>Price</th>
             <th>Availability</th>
             <th>Actions</th>
-        </tr>
-       </thead>
+          </tr>
+        </thead>
        <tbody>
             @foreach($Fooditem as $page)
-        <tr>
+          <tr>
             <td>{{$page['id']}}</td>
             <td>{{$page['cook_id']}}</td>
             <td>{{$page['name']}}</td>
@@ -53,13 +54,14 @@
                 href="javascript:void(0)" record="fooditem" recordid="{{$page['id']}}">
               <i class="fas fa-trash "></i></a>
             </td>
-        </tr>
+          </tr>
             @endforeach
-    </tbody>
-    </table>
-   </div>
+        </tbody>
+      </table>
+    </div>
+    </div>
+   <!--End Main Content -->
   </div>
-</div>
 </div>
 @endsection 
 
