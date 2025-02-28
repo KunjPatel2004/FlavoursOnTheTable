@@ -86,6 +86,13 @@ class CookController extends Controller
    
     public function Manage_Orders(){
         Session::put('page','manage_orders');
-        return view('admin.order.manage_orders');
+        $manageorder = Order::get();
+      
+        return view('admin.order.manage_orders')->with(compact('manageorder'));
+    }
+
+    public function delete_order($id){
+        Order::where('id',$id)->delete();
+        return redirect()->back()->with('success message','Order deleted successfully!');
     }
 }

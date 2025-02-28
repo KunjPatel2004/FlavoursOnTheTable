@@ -36,8 +36,7 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::match(['get','post'],'cook-details','AdminController@CookDetails');
         Route::match(['get','post'],"add-edit-cook-details/{id?}",'AdminController@add_edit_cookdetails');
         Route::match(['get','post'],'manage_order','CookController@Manage_Orders');
-
-
+        Route::get("delete-orderdetail/{id?}",'CookController@delete_order');
      });
 });
 

@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('customer_name')->references('name')->on('admins')->onDelete('cascade');
-            $table->foreignId('cook_name')->references('name')->on('admins')->onDelete('cascade');
+            $table->foreignId('customer_name')->references('id')->on('admins')->onDelete('cascade');
+            $table->foreignId('cook_name')->references('id')->on('admins')->onDelete('cascade');
+            $table->string('totalfooditems');
             $table->enum('status',['pending','preparing','ready','delivered'])->default('pending');
             $table->decimal('total_price',8,2);
             $table->string('payment_type')->default('COD');

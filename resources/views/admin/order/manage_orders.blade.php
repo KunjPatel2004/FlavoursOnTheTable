@@ -35,11 +35,39 @@
                             <th>Customer Name</th>
                             <th>Cook Name</th>
                             <th>Food Items</th>
-                            <th>Price</th>
+                            <th>Total Price</th>
                             <th>Ordered On</th>
                             <th>Status</th>
+                            <th>Actions</th>
                             </tr>
                         </thead>
+                        <tbody>
+                            @foreach($manageorder as $manage)   
+                            <tr>
+                            <td>{{$manage['id']}}</td>
+                            <td>{{$manage['customer_name']}}</td>
+                            <td>{{$manage['cook_name']}}</td>
+                            <td>{{$manage['totalfooditems']}}</td>
+                            <td>{{$manage['total_price']}}</td>
+                            <td>{{ $newDate = date("F j, Y, g:i a", strtotime( $manage->created_at ));}}</td>
+                            <td><select value="{{$manage['status']}}"  class="form-control">
+                                    <option>Pending</option>
+                                    <option>Preparing</option>
+                                    <option>Ready</option>
+                                    <option>Delivered</option>
+                                </select>    
+                                </td>
+                            <td>
+                                <a href="javascript:void(0)" style="color:black" class="btn btn-success">
+                                 Update</a>
+                                &nbsp; &nbsp;
+                                <a style="color:#3f6ed3" class="confirmDelete" name="order" title="delete order detail"
+                                    href="javascript:void(0)" record="orderdetail" recordid="{{$manage['id']}}">
+                                <i class="fas fa-trash "></i></a>
+                            </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
                     </table>
                 </div>
                 <!-- /.card-body -->

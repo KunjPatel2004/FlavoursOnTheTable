@@ -194,6 +194,5 @@ class AdminController extends Controller
     public function Order_statistics(){
         Session::put('page','order_statistics');
         return view('admin.order.order_statistics');
-
     }
 }
