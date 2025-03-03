@@ -31,31 +31,31 @@
                 <h3 class="card-title">Update Admin Details</h3>
               </div>
              
-    @if(Session::has('error message'))
+            @if(Session::has('error message'))
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 <strong>Error:</strong>{{ Session::get('error message') }}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-    @endif
-    @if(Session::has('success message'))
+            @endif
+            @if(Session::has('success message'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <strong>Success:</strong>{{ Session::get('success message') }}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-    @endif
-    @if ($errors->any())
-       <div class="alert alert-danger">
-          <ul>
-            @foreach ($errors->all() as $error)
+            @endif
+            @if ($errors->any())
+            <div class="alert alert-danger">
+            <ul>
+              @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>
-            @endforeach
-          </ul>
+              @endforeach
+            </ul>
         </div>
-    @endif
+              @endif
             
               <form method="post" action="{{url('admin/update-details')}}" enctype="multipart/form-data">@csrf
                 <div class="card-body">
@@ -86,7 +86,7 @@
                   </div>
                 
 
-                <div class="card-footer">
+                <div class="form-group">
                   <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
               </form>

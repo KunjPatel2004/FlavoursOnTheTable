@@ -60,20 +60,34 @@
                     @if(!empty($cookpage->email)) readonly="" @endif>
                     
                   </div>
-                   
+                  
+                  @if(!empty($cookpage->role))
                   <div class="form-group col-md-6">
                     <label for="role">Role</label>
                     <input type="text" class="form-control" id="role" name="role" 
-                   @if(empty($cookpage->role)) value="cook" readonly="" @endif>
+                    value="{{$cookpage['role']}}" readonly="" >
                   </div>
+                  @elseif(empty($cookpage->role))
+                  <div class="form-group col-md-6">
+                    <label for="role">Role</label>
+                    <input type="text" class="form-control" id="role" name="role" value="cook" readonly="">
+                  </div>
+                  @endif
+           
 
-                 @if(empty($cookpage->id))
+                  @if(!empty($cookpage->password))
                   <div class="form-group col-md-6">
                     <label for="password">Password</label>
                     <input type="password" class="form-control" id="password" name="password" 
-                     value="{{$cookpage['password']}}" >
+                    value="{{$cookpage['password']}}"  readonly="">
                   </div>
-                 @endif
+                  @elseif(empty($cookpage->password))
+                  <div class="form-group col-md-6">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" >
+                  </div>
+                  @endif
+                
                   <div class="form-group col-md-6">
                     <label for="mobile">Mobile</label>
                     <input type="text" class="form-control" id="mobile" name="mobile" 

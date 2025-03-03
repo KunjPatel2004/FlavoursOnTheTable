@@ -25,7 +25,7 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         //Customer Details
         Route::match(['get','post'],'customer-details','AdminController@CustomerDetails');
         Route::post('update-customer-page-status','AdminController@updatecustomerstatus');
-        Route::match(['get','post'],"add-edit-customer-details/{id?}",'AdminController@edit_customerdetails');
+        Route::match(['get','post'],"add-edit-customer-details/{id?}",'AdminController@add_edit_customerdetails');
         Route::get("delete-customer/{id?}",'AdminController@delete_customer');
 
 
@@ -35,10 +35,16 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::get("delete-fooditem/{id?}",'CookController@delete_fooditem');
         Route::match(['get','post'],'cook-details','AdminController@CookDetails');
         Route::match(['get','post'],"add-edit-cook-details/{id?}",'AdminController@add_edit_cookdetails');
+        Route::get("delete-cook-detail/{id?}",'AdminController@delete_cook');
         Route::match(['get','post'],'manage_order','CookController@Manage_Orders');
         Route::get("delete-orderdetail/{id?}",'CookController@delete_order');
+        Route::match(['get','post'],"view-order-details/{id?}",'CookController@view_order');
+        Route::post('update-order-status','CookController@updateorderstatus');
+        Route::post('demo','CookController@demo');
+        
      });
+     
+
+    Route::get('test','AdminController@test');
+
 });
-
-
-

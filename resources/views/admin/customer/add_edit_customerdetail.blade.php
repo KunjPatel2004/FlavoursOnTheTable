@@ -60,18 +60,29 @@
                     value="{{$customerpage['email']}}">
                   </div>
 
-                  @if(empty($customerpage->id))
+                  @if(!empty($customerpage->role))
                   <div class="form-group col-md-6">
                     <label for="role">Role</label>
                     <input type="text" class="form-control" id="role" name="role" 
-                   @if(empty($customerpage->role)) value="customer" readonly="" @endif>
+                    value="{{$customerpage->role}}" readonly="">
                   </div>
+                  @elseif(empty($customerpage->role))
+                  <div class="form-group col-md-6">
+                    <label for="role">Role</label>
+                    <input type="text" class="form-control" id="role" name="role" value="customer" readonly="">
+                  </div>
+                  @endif
 
-                 
+                  @if(!empty($customerpage->password))
                   <div class="form-group col-md-6">
                     <label for="password">Password</label>
                     <input type="password" class="form-control" id="password" name="password" 
-                     value="{{$customerpage['password']}}" >
+                     value="{{$customerpage['password']}}" readonly="">
+                  </div>
+                  @elseif(empty($customerpage->password))
+                  <div class="form-group col-md-6">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="password">
                   </div>
                  @endif
                   <div class="form-group col-md-6">

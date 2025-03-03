@@ -120,7 +120,7 @@ class AdminController extends Controller
         }
     }
 
-    public function edit_customerdetails(Request $request,$id=null){
+    public function add_edit_customerdetails(Request $request,$id=null){
         Session::put('page','customer_details');
         if($id==""){
             $title = "Add New Customer";
@@ -133,6 +133,24 @@ class AdminController extends Controller
         }
 
         if($request->isMethod('post')){
+            $rules=$request->validate([
+                'name'=>'required',
+                'email'=>'required',
+                'password'=> 'required',
+                'mobile'=> 'required|numeric|digits:10',
+                'home_address'=>'required',
+                'status'=>'required'
+            ]);
+            $customMessages=$request->validate([
+                'name.required'=>'Name is required', 
+                'email.required'=>'Email is required', 
+                'password.required'=>'Password is required',
+                'mobile.required'=> 'Mobile is required',
+                'mobile.numeric'=> 'Valid mobile is required',
+                'mobile.digits'=> 'Valid mobile is required',
+                'home_address.required'=>'Home address is required',
+                'status.required'=>'Status is required',
+            ]);
             $data = $request->all();
         
             $customerpage->name = $data['name'];
@@ -159,8 +177,7 @@ class AdminController extends Controller
 
         
     public function CookDetails(){
-        Session::put('page','cook_details');
-        
+        Session::put('page','cook_details'); 
         $cookdetails = Admin::where('role','cook')->get();
         return view('admin.cook.manage_cook')->with(compact('cookdetails'));
     }
@@ -178,6 +195,24 @@ class AdminController extends Controller
         }
 
         if($request->isMethod('post')){
+            $rules=$request->validate([
+                'name'=>'required',
+                'email'=>'required',
+                'password'=> 'required',
+                'mobile'=> 'required|numeric|digits:10',
+                'address'=>'required',
+                'status'=>'required'
+            ]);
+            $customMessages=$request->validate([
+                'name.required'=>'Name is required', 
+                'email.required'=>'Email is required', 
+                'password.required'=>'Password is required',
+                'mobile.required'=> 'Mobile is required',
+                'mobile.numeric'=> 'Valid mobile is required',
+                'mobile.digits'=> 'Valid mobile is required',
+                'home_address.required'=>'Home address is required',
+                'status.required'=>'Status is required',
+            ]);
             $data = $request->all(); 
             $cookpage->name = $data['name'];
             $cookpage->email = $data['email'];
@@ -191,8 +226,19 @@ class AdminController extends Controller
         }
         return view('admin.cook.add_edit_cookdetail')->with(compact('title','cookpage'));
     }
-    public function Order_statistics(){
-        Session::put('page','order_statistics');
-        return view('admin.order.order_statistics');
+
+    public function delete_cook($id){
+        Admin::where('id',$id)->delete();
+        return redirect()->back()->with('success message','Cook deleted successfully!');
     }
+
+
+    public function test(){
+       $test = Admin::all();
+       return response()->json([
+        'status'=>200,
+        'student'=>$test
+     ],200);
+    }
+ 
 }

@@ -74,4 +74,26 @@ $(document).ready(function(){
        })                           
     });
 
+
+    $(document).on("change",".Ustatus",function(){
+        var newstatus = $(this).val();
+        var orderId = $(this).data("id");
+       
+
+        $.ajax({ 
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            type:'post',
+            url:'/admin/update-order-status',
+            data:{order_id:orderId,status:newstatus},
+
+            success:function(response){
+               $("#order-status").text("newstatus");
+               alert(response.message);
+
+            },error:function(){
+                 alert("Error");
+            }
+        })
+    })
+
 });

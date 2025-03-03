@@ -32,7 +32,6 @@
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
                 <i class="fas fa-minus"></i>
               </button>
-
             </div>
           </div>
           <!-- /.card-header -->
@@ -49,48 +48,41 @@
            </div>
           @endif
         
-              <form name="addfoodform" id="addfoodform" @if(empty($fooditempage->id))
-               action="{{url('admin/add-edit-food-item')}}" @else  action="{{url('admin/add-edit-food-item/'.$fooditempage['id'])}}"
-               @endif method="post" enctype="multipart/form-data">@csrf
+              <form name="vieworderform" id="vieworderform" @if(empty($orderpage->id))
+               action="{{url('admin/view-order-details')}}" @else  action="{{url('admin/view-order-details/'.$orderpage['id'])}}"
+               @endif method="post">@csrf
                 <div class="card-body">
                   <div class="form-group col-md-6">
-                    <label for="cook_id">Cook ID</label>
-                    <input type="text" class="form-control" id="cook_id" name="cook_id" placeholder="Enter Cook Id"
-                    value="{{$fooditempage['cook_id']}}" >
+                    <label for="customer_name">Customer Name</label>
+                    <input type="text" class="form-control" id="customer_name" name="customer_name"
+                    value="{{$orderpage['customer_name']}}" >
                   </div>
                   <div class="form-group col-md-6">
-                    <label for="name" >Food Name</label>
-                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter food name"
-                     value="{{$fooditempage['name']}}" >
-                    
+                    <label for="cook_name">Cook Name</label>
+                    <input type="text" class="form-control" id="cook_name" name="cook_name"
+                    value="{{$orderpage['cook_name']}}" >
+                  </div>
+        
+                  <div class="form-group col-md-6">
+                    <label for="totalfooditems">Total Food Items</label>
+                    <input type="text" class="form-control" id="totalfooditems" name="totalfooditems"
+                    value="{{$orderpage['totalfooditems']}}" >
                   </div>
                   <div class="form-group col-md-6">
-                    <label for="description">Description</label>
-                    <textarea class="form-control" rows="3" id="description" name="description">@if(!empty($fooditempage['description'])) {{$fooditempage['description']}} @endif</textarea>
+                    <label for="total_price">Total Price</label>
+                    <input type="text" class="form-control" id="total_price" name="total_price" 
+                    value="{{$orderpage['total_price']}}">
                   </div>
+
                   <div class="form-group col-md-6">
-                    <label for="price">Price</label>
-                    <input type="text" class="form-control" id="price" name="price" placeholder="Enter Price"
-                    value="{{$fooditempage['price']}}">
+                    <label for="status">Status</label>
+                    <input type="text" class="form-control" id="status" name="status" 
+                    value="{{$orderpage['status']}}">
                   </div>
-                  <div class="form-group col-md-6">
-                    <label for="admin_image">Image</label>
-                    <input type="file" name="admin_image" class="form-control" id="admin_image">
-                    @if(!empty($fooditempage['image']))
-                      <a target= "_blank" href="{{url('admin/images/fooditems/'.$fooditempage['image'])}}">View Image</a>
-                      <input type="hidden" name="current_image" value="{{$fooditempage['image']}}">
-                      @endif 
-                  </div> 
-                  <div class="form-group col-md-6">
-                  <label for="status">Status</label>
-                  <select name="status" id="status" class="form-control">
-                    <option>Available</option>
-                    <option>Unavailable</option>
-                  </select>
-                  </div>
-                  <div class="form-group col-md-10">
+                  
+                  <!-- <div class="form-group col-md-10">
                   <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
+                </div> -->
                 </div>
                 <!-- /.card-body -->
                 

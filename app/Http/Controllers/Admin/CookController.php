@@ -14,7 +14,6 @@ class CookController extends Controller
 {
     public function Food_items() {
         Session::put('page','food_item');
-       // $Fooditem = FoodItem::where('cook_id',auth('admin')->id())->get();
          $Fooditem = FoodItem::get()->toArray();
         return view('admin.cook.food_items')->with(compact('Fooditem'));
     }
@@ -28,11 +27,10 @@ class CookController extends Controller
             $message = "Food item added successfully";
         }else{
             $title = "Edit food item";
-            $fooditempage = FoodItem::find($id);             //Takes current CMS Page data for updation
+            $fooditempage = FoodItem::find($id);             
             $message = "Food item updated successfully";
         }
-
-        // $request->validate($rules,$customMessages)
+        
         if($request->isMethod('post')){
             $data = $request->all();
             //  echo "<prev>"; print_r($data); die;
@@ -91,8 +89,41 @@ class CookController extends Controller
         return view('admin.order.manage_orders')->with(compact('manageorder'));
     }
 
+    public function view_order(Request $request,$id=null){
+        Session::put('page','manage_orders');
+        if($id){
+            $title = "View Order Details";
+            $orderpage = Order::find($id);            
+        }
+
+        if($request->isMethod('post')){
+            $data = $request->all();
+        
+            $orderpage->customer_name = $data['customer_name'];
+            $orderpage->cook_name = $data['cook_name'];
+            $orderpage->totalfooditems = $data['totalfooditems'];   
+            $orderpage->total_price = $data['total_price'];   
+            $orderpage->status = $data['status'];
+        }
+        return view('admin.order.view_order')->with(compact('title','orderpage'));
+    }
+
     public function delete_order($id){
         Order::where('id',$id)->delete();
         return redirect()->back()->with('success message','Order deleted successfully!');
+    }
+
+    public function updateorderstatus(Request $request, $id){
+        if($request->ajax()){
+       $order = Order::findorFail($request->order_id);
+       $order->status = $request->status;
+       $order->save();
+       return response()->json(['message'=>'order status updated successfully!']);
+        }
+    }
+
+    public function demo(){
+        $users = Order::get();
+        dd($users->count);
     }
 }

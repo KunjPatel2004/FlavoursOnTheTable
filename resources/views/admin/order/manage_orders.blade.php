@@ -50,20 +50,21 @@
                             <td>{{$manage['totalfooditems']}}</td>
                             <td>{{$manage['total_price']}}</td>
                             <td>{{ $newDate = date("F j, Y, g:i a", strtotime( $manage->created_at ));}}</td>
-                            <td><select value="{{$manage['status']}}"  class="form-control">
-                                    <option>Pending</option>
-                                    <option>Preparing</option>
-                                    <option>Ready</option>
-                                    <option>Delivered</option>
+                            <td><select  class="Ustatus"  data-id="{{$manage['id']}}">
+                                <option value="pending" {{ $manage->status == 'pending' ? 'selected' : '' }}>Pending</option>
+                                <option value="preparing" {{ $manage->status == 'preparing' ? 'selected' : '' }}>Preparing</option>
+                                <option value="ready" {{ $manage->status == 'ready' ? 'selected' : '' }}>Ready</option>
+                                <option value="delivered" {{ $manage->status == 'delivered' ? 'selected' : '' }}>Delivered</option>
+
                                 </select>    
                                 </td>
                             <td>
-                                <a href="javascript:void(0)" style="color:black" class="btn btn-success">
-                                 Update</a>
-                                &nbsp; &nbsp;
                                 <a style="color:#3f6ed3" class="confirmDelete" name="order" title="delete order detail"
                                     href="javascript:void(0)" record="orderdetail" recordid="{{$manage['id']}}">
                                 <i class="fas fa-trash "></i></a>
+
+                                &nbsp; &nbsp; 
+                                <a href="{{url('admin/view-order-details/'.$manage['id'])}}" style="color:#3f6ed3">View details</a>
                             </td>
                             </tr>
                             @endforeach

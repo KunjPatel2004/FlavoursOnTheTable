@@ -49,7 +49,7 @@
                                         <i class="fas fa-edit"></i></a>
                                         &nbsp; &nbsp;
                                     <a style="color:#3f6ed3" class="confirmDelete" name="cook" title="delete cook detail"
-                                        href="javascript:void(0)" record="cookdeatil" recordid="{{$detail['id']}}">
+                                        href="javascript:void(0)" record="cook-detail" recordid="{{$detail['id']}}">
                                     <i class="fas fa-trash "></i></a>
                                 </td>
                             </tr>

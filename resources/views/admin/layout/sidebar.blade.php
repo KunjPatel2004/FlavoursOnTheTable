@@ -2,7 +2,6 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="#" class="brand-link">
-      <img src="{{asset('admin/images/AdminLTELogo.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="font-weight-light">Flavours On The Table</span>
     </a>
 
@@ -118,20 +117,6 @@
               <i class="nav-icon fas fa-edit"></i>
               <p>
                Manage Orders
-              </p>
-            </a>
-        </li>
-
-        @if(Session::get('page')=="order_statistics")
-              @php $active = "active" @endphp
-            @else
-              @php $active="" @endphp
-          @endif
-          <li class="nav-item">
-            <a href="{{url('admin/order_statistics')}}" class="nav-link {{$active}}">
-              <i class="nav-icon fas fa-edit"></i>
-              <p>
-                Order Statistics
               </p>
             </a>
         </li>
