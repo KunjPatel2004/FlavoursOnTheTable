@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Admin;
+use App\Models\Order;
 use Auth;
 use Session;
 use Image;
@@ -14,15 +15,21 @@ class AdminController extends Controller
 {
     public function dashboard(){
         Session::put('page','dashboard');
-        return view('admin.dashboard');
+        $ordercount = Order::all()->count();
+        $cookcount = Admin::where('role','cook')->count();
+        $customercount = Admin::where('role','customer')->count();
+        return view('admin.dashboard')->with(compact('ordercount','cookcount','customercount'));
     }
 
-    
+    public function Profile_details(){
+        return view('admin.profile_details');
+    }
 
     public function UpdatePassword(Request $request){
         Session::put('page','update_password');
         if($request->isMethod('post')){
             $data = $request->all();
+           
             //Check if current password is correct
             if(Hash::check($data['current_pwd'],Auth::guard('admin')->user()->password)){
                //Check if new password and confirm password are matching
@@ -33,7 +40,7 @@ class AdminController extends Controller
                }else{
                 return redirect()->back()->with('error message','New password and retype password does not match');
                }
-            }else {
+            }else{
                 return redirect()->back()->with('error message','Your current password is incorrect');
             }
         }
@@ -62,15 +69,12 @@ class AdminController extends Controller
 
              $customMessages=$request->validate([
                 'admin_name.required'=> 'Name is required',
-                // 'admin_name.regex'=> 'Valid name is required',
                 'admin_name.max'=> 'Valid name is required',
                 'admin_mobile.required'=> 'Mobile is required',
                 'admin_mobile.numeric'=> 'Valid mobile is required',
                 'admin_mobile.digits'=> 'Valid mobile is required',
                 'admin_image.image'=> 'Valid image is required',
              ]);
-
-            // $this->validate($request,$rules,$customMessages);
 
             //Upload Admin Image
             if($request->hasFile('admin_image')){
@@ -156,7 +160,7 @@ class AdminController extends Controller
             $customerpage->name = $data['name'];
             $customerpage->email = $data['email'];
             $customerpage->role = $data['role'];   
-            $customerpage->password = $data['password'];   
+            $customerpage->password = bcrypt($data['password']);   
             $customerpage->mobile = $data['mobile'];
             $customerpage->home_address = $data['home_address'];
             $customerpage->work_address = $data['work_address'];
@@ -217,7 +221,7 @@ class AdminController extends Controller
             $cookpage->name = $data['name'];
             $cookpage->email = $data['email'];
             $cookpage->role = $data['role'];   
-            $cookpage->password = $data['password']; 
+            $cookpage->password = bcrypt($data['password']); 
             $cookpage->mobile = $data['mobile'];
             $cookpage->home_address = $data['address'];
             $cookpage->status = $data['status'];   
@@ -241,4 +245,5 @@ class AdminController extends Controller
      ],200);
     }
  
+   
 }

@@ -50,14 +50,14 @@
                             <td>{{$manage['totalfooditems']}}</td>
                             <td>{{$manage['total_price']}}</td>
                             <td>{{ $newDate = date("F j, Y, g:i a", strtotime( $manage->created_at ));}}</td>
-                            <td><select  class="Ustatus"  data-id="{{$manage['id']}}">
+                            <td>
+                                <select class="status-dropdown" data-id="{{$manage['id']}}">
                                 <option value="pending" {{ $manage->status == 'pending' ? 'selected' : '' }}>Pending</option>
                                 <option value="preparing" {{ $manage->status == 'preparing' ? 'selected' : '' }}>Preparing</option>
                                 <option value="ready" {{ $manage->status == 'ready' ? 'selected' : '' }}>Ready</option>
                                 <option value="delivered" {{ $manage->status == 'delivered' ? 'selected' : '' }}>Delivered</option>
-
-                                </select>    
-                                </td>
+                                </select>
+                            </td>
                             <td>
                                 <a style="color:#3f6ed3" class="confirmDelete" name="order" title="delete order detail"
                                     href="javascript:void(0)" record="orderdetail" recordid="{{$manage['id']}}">

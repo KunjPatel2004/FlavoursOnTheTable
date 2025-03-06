@@ -57,9 +57,7 @@
                                     page_id="{{ $detail['id'] }}" style="color:grey" href="javascript:void(0)">
                                     <i class="fas fa-toggle-off" status="Inactive"></i></a>
                                 @endif
-                                <!-- &nbsp; &nbsp; 
-                                <a href="{{url('admin/edit-customer-details/'.$detail['id'])}}" style="color:#3f6ed3">
-                                <i class="fas fa-edit"></i></a></td> -->
+                               
                                 &nbsp; &nbsp;
                                 <a style="color:#3f6ed3" class="confirmDelete" name="customer" title="delete customer"
                                  href="javascript:void(0)" record="customer" recordid="{{$detail['id']}}" 

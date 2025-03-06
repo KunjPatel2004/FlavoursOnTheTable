@@ -2,7 +2,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="#" class="brand-link">
-      <span class="font-weight-light">Flavours On The Table</span>
+      <span class="font-weight-light">Flavors On The Table</span>
     </a>
 
     <div class="sidebar">

@@ -12,7 +12,7 @@ Route::get('/', function () {
 Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function(){
     
     Route::match(['get','post'],'login','AuthController@login');
-    Route::match(['get','post'],'register','AuthController@register');
+    Route::match(['get','post'],'registration','AuthController@registration');
     Route::group(['middleware'=> ['admin']],function(){          //To protect the routes form opening without login
         Route::get('logout',"AuthController@logout");
         Route::get('dashboard','AdminController@dashboard');
@@ -20,6 +20,8 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::post('check-current-password','AdminController@checkCurrentPassword');
         Route::match(['get','post'],'update-details','AdminController@UpdateDetails');
         Route::get('order_statistics','AdminController@Order_statistics');
+        Route::match(['get','post'],'profile-details','AdminController@Profile_details');
+
        
         
         //Customer Details
@@ -39,8 +41,8 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::match(['get','post'],'manage_order','CookController@Manage_Orders');
         Route::get("delete-orderdetail/{id?}",'CookController@delete_order');
         Route::match(['get','post'],"view-order-details/{id?}",'CookController@view_order');
-        Route::post('update-order-status','CookController@updateorderstatus');
-        Route::post('demo','CookController@demo');
+        Route::post("update-status/{id?}",'CookController@updateorderstatus');
+       
         
      });
      

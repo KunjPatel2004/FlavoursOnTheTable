@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="csrf-token" content="{{ csrf_token()}}" />
-  <title>Flavours On The Table | Dashboard</title>
+  <title>Flavors On The Table | Dashboard</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -31,11 +31,6 @@
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
-  <!-- Preloader
-  <div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__shake" src="{{url('admin/img/AdminLTELogo.png')}}" alt="AdminLTELogo" height="60" width="60">
-  </div> -->
-
 @include('admin.layout.header')
 
 @include('admin.layout.sidebar')
@@ -43,15 +38,8 @@
 @yield('content')
  
 
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
-
-
 </div>
-<!-- ./wrapper -->
+
 
 <!-- jQuery -->
 <script src="{{url('admin/plugins/jquery/jquery.min.js')}}"></script>
@@ -67,26 +55,21 @@
 <script src="{{url('admin/plugins/chart.js/Chart.min.js')}}"></script>
 <!-- Sparkline -->
 <script src="{{url('admin/plugins/sparklines/sparkline.js')}}"></script>
-<!-- JQVMap -->
-<!-- <script src="{{url('admin/plugins/jqvmap/jquery.vmap.min.js')}}"></script>
-<script src="{{url('admin/plugins/jqvmap/maps/jquery.vmap.usa.js')}}"></script> -->
+
 <!-- jQuery Knob Chart -->
 <script src="{{url('admin/plugins/jquery-knob/jquery.knob.min.js')}}"></script>
 <!-- daterangepicker -->
 <script src="{{url('admin/plugins/moment/moment.min.js')}}"></script>
 <script src="{{url('admin/plugins/daterangepicker/daterangepicker.js')}}"></script>
 <!-- Tempusdominus Bootstrap 4 -->
-<script src="{{url('admin/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
+<!-- <script src="{{url('admin/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script> -->
 <!-- Summernote -->
 <script src="{{url('admin/plugins/summernote/summernote-bs4.min.js')}}"></script>
 <!-- overlayScrollbars -->
 <script src="{{url('admin/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{url('admin/js/adminlte.js')}}"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="{{url('admin/js/demo.js')}}"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="{{url('admin/js/pages/dashboard.js')}}"></script>
+
 <!--Custom JS-->
 <script src="{{url('admin/js/custom.js')}}"></script>
 
@@ -96,7 +79,7 @@
 <script src="{{url('admin/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
 <!-- <script>
   $(function () {
-    $("#cmspages").DataTable();
+    $("#orders").DataTable();
     $("#admins").DataTable();
   });
 </script>  -->

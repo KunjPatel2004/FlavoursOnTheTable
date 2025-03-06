@@ -75,25 +75,27 @@ $(document).ready(function(){
     });
 
 
-    $(document).on("change",".Ustatus",function(){
-        var newstatus = $(this).val();
-        var orderId = $(this).data("id");
+    $('.status-dropdown').change(function(){
+        var orderId = $(this).data('id');
+        var newStatus = $(this).val();
        
-
         $.ajax({ 
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             type:'post',
-            url:'/admin/update-order-status',
-            data:{order_id:orderId,status:newstatus},
+            url:'/admin/update-status',
+            data:{order_id:orderId,status:newStatus},
 
             success:function(response){
-               $("#order-status").text("newstatus");
+                if(response.success){
+               $("#status-"+ orderId).text(newStatus);
                alert(response.message);
-
-            },error:function(){
-                 alert("Error");
+                }
+            },error:function() {
+                alert('Failed to update status');
             }
         })
     })
 
+
+   
 });

@@ -84,7 +84,7 @@ class CookController extends Controller
    
     public function Manage_Orders(){
         Session::put('page','manage_orders');
-        $manageorder = Order::get();
+        $manageorder = Order::all();
       
         return view('admin.order.manage_orders')->with(compact('manageorder'));
     }
@@ -115,15 +115,12 @@ class CookController extends Controller
 
     public function updateorderstatus(Request $request, $id){
         if($request->ajax()){
-       $order = Order::findorFail($request->order_id);
-       $order->status = $request->status;
-       $order->save();
-       return response()->json(['message'=>'order status updated successfully!']);
+            $data = $request->all();    
+            $order = Order::find($id);
+            $order->status =  $data['status'];
+            $order->save(); 
+    
+            return response()->json(['success' => true, 'message' => 'Order status updated successfully!']);
         }
-    }
-
-    public function demo(){
-        $users = Order::get();
-        dd($users->count);
     }
 }

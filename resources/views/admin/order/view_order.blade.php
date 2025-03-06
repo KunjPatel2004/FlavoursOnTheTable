@@ -73,16 +73,19 @@
                     <input type="text" class="form-control" id="total_price" name="total_price" 
                     value="{{$orderpage['total_price']}}">
                   </div>
-
-                  <div class="form-group col-md-6">
-                    <label for="status">Status</label>
-                    <input type="text" class="form-control" id="status" name="status" 
-                    value="{{$orderpage['status']}}">
-                  </div>
                   
-                  <!-- <div class="form-group col-md-10">
+                  <div class="form-group col-md-6">
+                  <label for="status">Status</label>
+                  <select name="status" id="{{$orderpage['id']}}" class="form-control">
+                      <option value="pending" >Pending</option>
+                      <option value="preparing">Preparing</option>
+                      <option value="ready">Ready</option>
+                      <option value="delivered">Delivered</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-10">
                   <button type="submit" class="btn btn-primary">Submit</button>
-                </div> -->
+                </div>
                 </div>
                 <!-- /.card-body -->
                 
