@@ -62,7 +62,7 @@
                                 <a style="color:#3f6ed3" class="confirmDelete" name="customer" title="delete customer"
                                  href="javascript:void(0)" record="customer" recordid="{{$detail['id']}}" 
                               <?php  /* href="{{url('admin/delete-customer/'.$detail['id'])}}"*/?>>
-                                <i class="fas fa-trash "></i></a>
+                                <i class="fas fa-trash "></i>&nbsp; Delete</a>
                                 
                                 &nbsp; &nbsp; 
                                 <a href="{{url('admin/add-edit-customer-details/'.$detail['id'])}}" style="color:#3f6ed3">View details</a>

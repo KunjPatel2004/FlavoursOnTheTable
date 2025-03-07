@@ -76,7 +76,7 @@
                   
                   <div class="form-group col-md-6">
                   <label for="status">Status</label>
-                  <select name="status" id="{{$orderpage['id']}}" class="form-control">
+                  <select name="status-dropdown" id="page-{{$orderpage['id']}}" page_id="{{$orderpage['id']}}" class="form-control">
                       <option value="pending" >Pending</option>
                       <option value="preparing">Preparing</option>
                       <option value="ready">Ready</option>

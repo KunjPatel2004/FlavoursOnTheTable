@@ -45,12 +45,12 @@
                                 <td>{{$detail['email']}}</td>
                                 <td>{{$detail['home_address']}}</td>
                                 <td>
-                                    <a href="{{url('admin/add-edit-cook-details/'.$detail['id'])}}" style="color:#3f6ed3">
-                                        <i class="fas fa-edit"></i></a>
+                                    <a class="btn btn-info btn-sm" href="{{url('admin/add-edit-cook-details/'.$detail['id'])}}" style="color:white">
+                                        <i class="fas fa-pencil-alt"></i>Edit</a>
                                         &nbsp; &nbsp;
                                     <a style="color:#3f6ed3" class="confirmDelete" name="cook" title="delete cook detail"
                                         href="javascript:void(0)" record="cook-detail" recordid="{{$detail['id']}}">
-                                    <i class="fas fa-trash "></i></a>
+                                    <i class="fas fa-trash "></i>&nbsp; Delete</a>
                                 </td>
                             </tr>
                             @endforeach

@@ -12,9 +12,7 @@ use Hash;
 
 class AuthController extends Controller
 {
-    // public function register(Request $request){
-    //     return view('admin.register');
-    // }
+    
 
     public function login(Request $request){
         if($request->isMethod('post')){
@@ -31,6 +29,7 @@ class AuthController extends Controller
                 'email.email' =>'Valid email is required',
                 'password.required' =>'Password is required',
             ];
+            
             $request->validate($rules,$customMessages);
              if(Auth::guard('admin')->attempt(['email'=>$data['email'],'password'=>$data['password']])){
 
@@ -42,8 +41,6 @@ class AuthController extends Controller
                     setcookie("email","");
                     setcookie("password","");
                 }
-
-
                 return redirect("admin/dashboard");
                  
             }else{

@@ -1,7 +1,9 @@
 <?php
+ 
 
 namespace App\Http\Controllers\Admin;
-
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Admin;
@@ -9,6 +11,7 @@ use App\Models\FoodItem;
 use App\Models\Order;
 use Session;
 use Image;
+
 
 class CookController extends Controller
 {
@@ -79,7 +82,7 @@ class CookController extends Controller
 
     public function delete_fooditem($id){
         FoodItem::where('id',$id)->delete();
-        return redirect()->back()->with('success message','Customer deleted successfully!');
+        return redirect()->back()->with('success message','Food item deleted successfully!');
     }
    
     public function Manage_Orders(){
@@ -103,7 +106,9 @@ class CookController extends Controller
             $orderpage->cook_name = $data['cook_name'];
             $orderpage->totalfooditems = $data['totalfooditems'];   
             $orderpage->total_price = $data['total_price'];   
-            $orderpage->status = $data['status'];
+            $orderpage->status = $data['status-dropdown'];
+            $orderpage->save();
+            return redirect('admin/manage_order')->with('success message',"Status Updated successfully");
         }
         return view('admin.order.view_order')->with(compact('title','orderpage'));
     }
@@ -113,14 +118,15 @@ class CookController extends Controller
         return redirect()->back()->with('success message','Order deleted successfully!');
     }
 
-    public function updateorderstatus(Request $request, $id){
-        if($request->ajax()){
-            $data = $request->all();    
-            $order = Order::find($id);
-            $order->status =  $data['status'];
-            $order->save(); 
-    
-            return response()->json(['success' => true, 'message' => 'Order status updated successfully!']);
-        }
-    }
+    public function updateorderstatus(Request $request){
+        echo"<prev>"; print_r($request);die;
+      // if($request->ajax()){
+      //     $data = $request->all();    
+      //     $order = $data['status'];
+      //     $order->save(); 
+      //     Order::where('id',$data['orderId'])->update(['status'=>$order]);
+      //     return response()->json(['success' => true, 'message' => 'Order status updated successfully!']);
+      // }
+     
+  }
 }

@@ -32,8 +32,8 @@
                         <thead>
                             <tr>
                             <th>ID</th>
-                            <th>Customer Name</th>
-                            <th>Cook Name</th>
+                            <th>Customer Id</th>
+                            <th>Cook Id</th>
                             <th>Food Items</th>
                             <th>Total Price</th>
                             <th>Ordered On</th>

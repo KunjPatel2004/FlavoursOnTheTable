@@ -76,9 +76,9 @@ $(document).ready(function(){
 
 
     $('.status-dropdown').change(function(){
-        var orderId = $(this).data('id');
-        var newStatus = $(this).val();
-       
+        var orderId = $(this).attr("page_id");
+        var newStatus = $(this).children("option").attr("value");
+      
         $.ajax({ 
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             type:'post',
@@ -87,7 +87,7 @@ $(document).ready(function(){
 
             success:function(response){
                 if(response.success){
-               $("#status-"+ orderId).text(newStatus);
+               $("#page-"+ orderId).text(newStatus);
                alert(response.message);
                 }
             },error:function() {
