@@ -1,19 +1,23 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Front\IndexController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-
+Route::namespace('App\Http\Controllers\Front')->group(function(){
+   Route::get('/',[IndexController::class,'index']);
+});
     
 
 Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function(){
     
+   
     Route::match(['get','post'],'login','AuthController@login');
     Route::match(['get','post'],'registration','AuthController@registration');
-    Route::group(['middleware'=> ['admin']],function(){          //To protect the routes form opening without login
+    Route::group(['middleware'=> ['admin']],function(){          //To protect the routes
         Route::get('logout',"AuthController@logout");
         Route::get('dashboard','AdminController@dashboard');
         Route::match(['get','post'],'update_password','AdminController@UpdatePassword');
