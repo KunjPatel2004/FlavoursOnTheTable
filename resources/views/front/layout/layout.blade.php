@@ -6,10 +6,15 @@
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="cook-customer panel" name="keywords">
         <meta content="cook-customer panel" name="description">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <!-- Favicon -->
         <link href="{{url('front/img/favicon.ico')}}" rel="icon">
 
+        <script src="https://cdn.tailwindcss.com"></script>
+        
         <!-- Google Font -->
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Nunito:600,700" rel="stylesheet"> 
         
@@ -26,17 +31,24 @@
     </head>
 
     <body>
+        
         <!-- Nav Bar Start -->
         @include('front.layout.header')
         <!-- Nav Bar End -->
+       
+  
         @yield('content')
 
         <!-- Footer Start -->
         @include('front.layout.footer')
         <!-- Footer End -->
-
+      
         <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
 
+        <!--Custom JS-->
+        <script src="{{url('front/js/cart.js')}}"></script>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <!-- JavaScript Libraries -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
@@ -46,11 +58,13 @@
         <script src="{{url('front/lib/tempusdominus/js/moment-timezone.min.js')}}"></script>
         <script src="{{url('front/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js')}}"></script>
         
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Contact Javascript File -->
-        <script src="{{('front/mail/jqBootstrapValidation.min.js')}}"></script>
-        <script src="{{('front/mail/contact.js')}}"></script>
+        <!-- <script src="{{('front/mail/jqBootstrapValidation.min.js')}}"></script>
+        <script src="{{('front/mail/contact.js')}}"></script> -->
 
         <!-- Template Javascript -->
-        <script src="{{('front/js/main.js')}}"></script>
+        <!-- <script src="{{('front/js/main.js')}}"></script> -->
     </body>
 </html>

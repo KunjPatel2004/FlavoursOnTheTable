@@ -2,13 +2,27 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Front\IndexController;
+use App\Http\Controllers\Front\CartController;
+
 
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::namespace('App\Http\Controllers\Front')->group(function(){
-   Route::get('/',[IndexController::class,'index']);
+    
+    Route::get('/',[IndexController::class,'home']);
+    Route::match(['get','post'],'/login',[IndexController::class,'login']); 
+   Route::get('/register',[IndexController::class,'register']);
+   Route::get('/available_cooks',[IndexController::class,'AvailableCooks']);
+   Route::get('/cooks/{id}/menu', [IndexController::class, 'Menu'])->name('cooks.menu');
+
+   Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+   Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+   Route::post('/cart/update', [CartController::class, 'updateCart'])->name('cart.update');
+   Route::post('/cart/remove', [CartController::class, 'removeFromCart'])->name('cart.remove');
+   Route::post('/cart/clear', [CartController::class, 'clearCart'])->name('cart.clear');
+
 });
     
 
