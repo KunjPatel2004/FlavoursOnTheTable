@@ -15,13 +15,13 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
     Route::match(['get','post'],'/login',[IndexController::class,'login']); 
    Route::get('/register',[IndexController::class,'register']);
    Route::get('/available_cooks',[IndexController::class,'AvailableCooks']);
-   Route::get('/cooks/{id}/menu', [IndexController::class, 'Menu'])->name('cooks.menu');
+   Route::get('/cooks/{cook_id}/menu', [IndexController::class, 'Menu'])->name('cooks.menu');
 
-   Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-   Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
-   Route::post('/cart/update', [CartController::class, 'updateCart'])->name('cart.update');
-   Route::post('/cart/remove', [CartController::class, 'removeFromCart'])->name('cart.remove');
-   Route::post('/cart/clear', [CartController::class, 'clearCart'])->name('cart.clear');
+   Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('cart.add');
+   Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
+   Route::post('/update-cart', [CartController::class, 'updateCart'])->name('cart.update');
+   Route::post('/remove-from-cart', [CartController::class, 'removeFromCart'])->name('cart.remove');
+   Route::get('/cart/count', [CartController::class, 'getCartCount'])->name('cart.count');
 
 });
     

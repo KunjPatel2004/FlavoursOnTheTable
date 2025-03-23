@@ -16,34 +16,40 @@
             </div>
         </div>
 
-        <div class="container">
-    <h2>Your Cart</h2>
-    
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Image</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Subtotal</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody id="cart-body">
-            @foreach(session('cart', []) as $id => $item)
-            <tr>
-                <td><img src="{{ asset('storage/'.$item['image']) }}" width="50"></td>
-                <td>{{ $item['name'] }}</td>
-                <td>${{ $item['price'] }}</td>
-                <td><input type="number" class="cart-quantity" data-id="{{ $id }}" value="{{ $item['quantity'] }}" min="1"></td>
-                <td>${{ $item['price'] * $item['quantity'] }}</td>
-                <td><button class="btn btn-sm btn-danger remove-from-cart" data-id="{{ $id }}">Remove</button></td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
-
-    <button class="btn btn-warning" id="clear-cart">Clear Cart</button>
+        @if(Session::has('success message'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                 <strong>Success:</strong>{{ Session::get('success message') }}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+             </div>
+          @endif
+        <table class="table table-bordered table-hover">
+    <thead  class="bg-primary text-white">
+        <tr>
+            <th>Food Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach ($cartItems as $item)
+    <tr>
+        <td>{{ $item->food_name }}</td>
+        <td>₹{{ $item->price }}</td>
+        <td><input type="number" class="form-control update-cart" data-id="{{ $item->id }}" value="{{ $item->quantity }}" min="1" style="width: 80px;"></td>
+        <td>₹{{ $item->subtotal }}</td>
+        <td><button class="btn btn-danger remove-cart" data-id="{{ $item->id }}">Remove</button></td>   
+    </tr>
+@endforeach
+    </tbody>
+</table>
+<!-- Cart Total & Checkout -->
+<div class="d-flex justify-content-between align-items-center">
+    <h4>Total: ₹<span id="cart-total"></span></h4>
+    <a href="{{ url('/checkout') }}" class="btn btn-success btn-lg">Proceed to Checkout</a>
 </div>
+
 @endsection

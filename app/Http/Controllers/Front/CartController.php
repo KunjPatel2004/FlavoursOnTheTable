@@ -1,76 +1,70 @@
 <?php
 
 namespace App\Http\Controllers\Front;
-
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\FoodItem;
+use App\Models\Cart;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Session;
+use Auth;
 class CartController extends Controller
 {
-      // Show Cart Page
-      public function index()
-      {
-          return view('cart.index');
-      }
-  
-      // Add to Cart (AJAX)
-      public function addToCart(Request $request)
-      {
-          $food = FoodItem::findOrFail($request->id);
-          $cart = session()->get('cart', []);
-  
-          if (isset($cart[$food->id])) {
-              $cart[$food->id]['quantity'] += 1;
-          } else {
-              $cart[$food->id] = [
-                  "name" => $food->name,
-                  "price" => $food->price,
-                  "quantity" => 1,
-                  "image" => $food->image,
-              ];
-          }
-  
-          session()->put('cart', $cart);
-  
-          return response()->json([
-              'message' => 'Food added to cart!',
-              'cart_count' => count($cart)
-          ]);
-      }
-  
-      // Update Cart Item Quantity (AJAX)
-      public function updateCart(Request $request)
-      {
-          $cart = session()->get('cart', []);
-          
-          if (isset($cart[$request->id])) {
-              $cart[$request->id]['quantity'] = $request->quantity;
-              session()->put('cart', $cart);
-          }
-  
-          return response()->json(['message' => 'Cart updated successfully!', 'cart' => $cart]);
-      }
-  
-      // Remove Item from Cart (AJAX)
-      public function removeFromCart(Request $request)
-      {
-          $cart = session()->get('cart', []);
-  
-          if (isset($cart[$request->id])) {
-              unset($cart[$request->id]);
-              session()->put('cart', $cart);
-          }
-  
-          return response()->json(['message' => 'Item removed from cart!', 'cart_count' => count($cart)]);
-      }
-  
-      // Clear Cart (AJAX)
-      public function clearCart()
-      {
-          session()->forget('cart');
-          return response()->json(['message' => 'Cart cleared!', 'cart_count' => 0]);
-      }
+     // Display Cart
+     public function viewCart() {
+        $user_id = Auth::check() ? Auth::id() : null;
+        $cartItems = Cart::where('user_id', $user_id)->get();
+        return view('front.cart', compact('cartItems'));
+    }
+    
+     // Add to Cart
+    public function addToCart(Request $request) {
+        $food = FoodItem::find($request->id);
+        if (!$food) {
+            return response()->json(['status' => 'error', 'message' => 'Food item not found']);
+        }
+
+        $user_id = Auth::check() ? Auth::id() : null;
+        $existingCartItem = Cart::where('food_id', $food->id)->where('user_id', $user_id)->first();
+
+        if ($existingCartItem) {
+            $existingCartItem->quantity += 1;
+            $existingCartItem->subtotal = $existingCartItem->quantity * $existingCartItem->price;
+            $existingCartItem->save();
+        } else {
+            Cart::create([
+                'user_id' => $user_id,
+                'food_id' => $food->id,
+                'food_name' => $food->name,
+                'price' => $food->price,
+                'quantity' => 1,
+                'subtotal' => $food->price
+            ]);
+        }
+
+        return response()->json(['status' => 'success', 'message' => 'Food item added successfully']);
+    }
+
+    // Update Quantity
+    public function updateCart(Request $request) {
+        $cartItem = Cart::find($request->cart_id);
+        if ($cartItem) {
+            $cartItem->quantity = $request->quantity;
+            $cartItem->subtotal = $cartItem->quantity * $cartItem->price;
+            $cartItem->save();
+            return response()->json(['status' => 'success', 'message' => 'Cart updated']);
+        }
+        return response()->json(['status' => 'error', 'message' => 'Item not found']);
+    }
+
+    // Remove Item from Cart
+    public function removeFromCart(Request $request) {
+        $cartItem = Cart::find($request->cart_id);
+        if ($cartItem) {
+            $cartItem->delete();
+            return redirect()->back()->with('success message','Item removed');
+        }
+        return response()->json(['status' => 'error', 'message' => 'Item not found']);
+    }
 }

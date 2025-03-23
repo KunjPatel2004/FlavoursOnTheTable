@@ -20,7 +20,6 @@ class IndexController extends Controller
         return view('front.login');
     }
 
-
     public function register(){
         return view('front.register');
     }
@@ -32,12 +31,13 @@ class IndexController extends Controller
         return view('front.available_cooks')->with(compact('foods','cooks'));
     }
 
-    public function Menu($id)
+    public function Menu($cook_id)
     {
        Session::put('page','menu');
-        $selectedCook = Admin::findOrFail($id);
-        $menuItems = FoodItem::where('cook_id', $id)->get();
-
+        $selectedCook = Admin::findOrFail($cook_id);
+        $menuItems = FoodItem::where('cook_id', $cook_id)->get();
+      
+    
         return view('front.menu', compact('selectedCook', 'menuItems'));
     }
 }

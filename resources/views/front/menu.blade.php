@@ -18,7 +18,6 @@
 
 <div class="container-fluid mt-5">
     <h1 class="text-center mb-4">{{ $selectedCook->name }}'s Menu</h1>
-
     <div class="row">
         @foreach($menuItems as $food)
         <div class="col-md-4 mb-4">
@@ -28,12 +27,12 @@
                     <h5 class="card-title">{{ $food->name }}</h5>
                     <p class="card-text">{{ $food->description }}</p>
                     <div class="d-flex justify-content-between align-items-center">
-                        <h6 class="text-success mb-0">{{ $food->price }}</h6>
-                       <!-- Quantity Control -->
+                        <h6 class="text-success mb-0">₹{{ $food->price }}</h6>
                     </div>
-                    <div class="justify-content-between align-items-center">
-                        <button class="btn btn-success add-to-cart" data-id="{{ $food->id }}">Add to Cart</button>
-                    </div>
+                    <button class="btn btn-warning add-to-cart" 
+                        data-id="{{ $food->id }}">
+                        Add to Cart
+                    </button>
                 </div>
             </div>
         </div>

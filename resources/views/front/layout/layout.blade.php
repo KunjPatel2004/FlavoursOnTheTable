@@ -12,9 +12,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <!-- Favicon -->
         <link href="{{url('front/img/favicon.ico')}}" rel="icon">
-
-        <script src="https://cdn.tailwindcss.com"></script>
-        
+ 
         <!-- Google Font -->
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Nunito:600,700" rel="stylesheet"> 
         
@@ -45,10 +43,10 @@
       
         <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
 
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <!--Custom JS-->
         <script src="{{url('front/js/cart.js')}}"></script>
 
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <!-- JavaScript Libraries -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
@@ -65,6 +63,10 @@
         <script src="{{('front/mail/contact.js')}}"></script> -->
 
         <!-- Template Javascript -->
-        <!-- <script src="{{('front/js/main.js')}}"></script> -->
+        <script src="{{('front/js/main.js')}}"></script>
+
+        <!-- SweetAlert2 CSS & JS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </body>
 </html>
