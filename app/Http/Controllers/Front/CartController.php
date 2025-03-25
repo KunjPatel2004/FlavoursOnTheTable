@@ -11,30 +11,33 @@ use Session;
 use Auth;
 class CartController extends Controller
 {
-     // Display Cart
-     public function viewCart() {
-        $user_id = Auth::check() ? Auth::id() : null;
-        $cartItems = Cart::where('user_id', $user_id)->get();
-        return view('front.cart', compact('cartItems'));
-    }
-    
-     // Add to Cart
-    public function addToCart(Request $request) {
-        $food = FoodItem::find($request->id);
+    public function addToCart(Request $request)
+    {
+        $food = FoodItem::find($request->food_id);
         if (!$food) {
             return response()->json(['status' => 'error', 'message' => 'Food item not found']);
         }
 
-        $user_id = Auth::check() ? Auth::id() : null;
-        $existingCartItem = Cart::where('food_id', $food->id)->where('user_id', $user_id)->first();
+        $session_id = Session::getId();
+        $user_id = auth()->check() ? auth()->id() : null;
 
-        if ($existingCartItem) {
-            $existingCartItem->quantity += 1;
-            $existingCartItem->subtotal = $existingCartItem->quantity * $existingCartItem->price;
-            $existingCartItem->save();
+        // Check if the item already exists in the cart
+        $cartItem = Cart::where(function ($query) use ($user_id, $session_id) {
+            if ($user_id) {
+                $query->where('user_id', $user_id);
+            } else {
+                $query->where('session_id', $session_id);
+            }
+        })->where('food_id', $food->id)->first();
+
+        if ($cartItem) {
+            $cartItem->quantity += 1;
+            $cartItem->subtotal = $cartItem->quantity * $food->price;
+            $cartItem->save();
         } else {
             Cart::create([
                 'user_id' => $user_id,
+                'session_id' => $session_id,
                 'food_id' => $food->id,
                 'food_name' => $food->name,
                 'price' => $food->price,
@@ -43,28 +46,53 @@ class CartController extends Controller
             ]);
         }
 
-        return response()->json(['status' => 'success', 'message' => 'Food item added successfully']);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Item added to cart!',
+            'cart_count' => Cart::where('session_id', $session_id)->orWhere('user_id', $user_id)->count()
+        ]);
     }
 
-    // Update Quantity
-    public function updateCart(Request $request) {
+    public function viewCart()
+    {
+        $session_id = Session::getId();
+        $user_id = auth()->check() ? auth()->id() : null;
+
+        $cartItems = Cart::where(function ($query) use ($user_id, $session_id) {
+            if ($user_id) {
+                $query->where('user_id', $user_id);
+            } else {
+                $query->where('session_id', $session_id);
+            }
+        })->get();
+
+        $totalPrice = $cartItems->sum('subtotal');
+        return view('front.cart', compact('cartItems','totalPrice'));
+    }
+
+    public function updateCart(Request $request)
+    {
         $cartItem = Cart::find($request->cart_id);
         if ($cartItem) {
             $cartItem->quantity = $request->quantity;
             $cartItem->subtotal = $cartItem->quantity * $cartItem->price;
             $cartItem->save();
-            return response()->json(['status' => 'success', 'message' => 'Cart updated']);
+
+            return response()->json(['status' => 'success', 'message' => 'Cart updated successfully']);
         }
-        return response()->json(['status' => 'error', 'message' => 'Item not found']);
+
+        return response()->json(['status' => 'error', 'message' => 'Cart item not found']);
     }
 
-    // Remove Item from Cart
-    public function removeFromCart(Request $request) {
+    public function removeItem(Request $request)
+    {
         $cartItem = Cart::find($request->cart_id);
         if ($cartItem) {
             $cartItem->delete();
-            return redirect()->back()->with('success message','Item removed');
+            return response()->json(['status' => 'success', 'message' => 'Item removed from cart']);
         }
+
         return response()->json(['status' => 'error', 'message' => 'Item not found']);
     }
+        
 }

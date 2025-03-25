@@ -44,8 +44,9 @@
         <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <!--Custom JS-->
-        <script src="{{url('front/js/cart.js')}}"></script>
+
+       
+
 
         <!-- JavaScript Libraries -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -68,5 +69,9 @@
         <!-- SweetAlert2 CSS & JS -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <script src="{{url('front/js/cart.js')}}"></script>
+        <script src="{{url('front/js/checkout.js')}}"></script>
+
     </body>
 </html>

@@ -11,12 +11,5 @@ class Cart extends Model
 
     protected $table = 'carts';
 
-    protected $fillable = [
-        'user_id',
-        'food_id',
-        'food_name',
-        'price',
-        'quantity',
-        'subtotal'
-    ];
+    protected $fillable = ['user_id', 'session_id', 'food_id', 'food_name', 'price', 'quantity', 'subtotal'];
 }

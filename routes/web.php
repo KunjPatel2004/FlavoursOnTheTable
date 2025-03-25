@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Front\IndexController;
 use App\Http\Controllers\Front\CartController;
+use App\Http\Controllers\Front\OrderController;
 
 
 Route::get('/', function () {
@@ -12,17 +13,21 @@ Route::get('/', function () {
 Route::namespace('App\Http\Controllers\Front')->group(function(){
     
     Route::get('/',[IndexController::class,'home']);
-    Route::match(['get','post'],'/login',[IndexController::class,'login']); 
-   Route::get('/register',[IndexController::class,'register']);
-   Route::get('/available_cooks',[IndexController::class,'AvailableCooks']);
-   Route::get('/cooks/{cook_id}/menu', [IndexController::class, 'Menu'])->name('cooks.menu');
+    Route::match(['get', 'post'], '/customer/login', 'AuthController@login')->name('customer.login');
+    Route::get('/customer/logout', 'AuthController@logout')->name('customer.logout');
+    Route::match(['get', 'post'], '/customer/register', 'AuthController@register')->name('customer.register');
+    
+    Route::get('/available_cooks',[IndexController::class,'AvailableCooks']);
+    Route::get('/cooks/{cook_id}/menu', [IndexController::class, 'Menu'])->name('cooks.menu');
 
-   Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('cart.add');
-   Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
-   Route::post('/update-cart', [CartController::class, 'updateCart'])->name('cart.update');
-   Route::post('/remove-from-cart', [CartController::class, 'removeFromCart'])->name('cart.remove');
-   Route::get('/cart/count', [CartController::class, 'getCartCount'])->name('cart.count');
+    Route::post('/cart/add', [CartController::class, 'addToCart']);
+    Route::get('/cart/view', [CartController::class, 'viewCart']);
+    Route::post('/cart/update', [CartController::class, 'updateCart']);
+    Route::post('/cart/remove', [CartController::class, 'removeItem']);
 
+    Route::get('/cart', [CartController::class, 'viewCart'])->name('cart');
+    Route::get('/checkout', [OrderController::class, 'checkout'])->name('checkout');
+    Route::post('/place-order', [OrderController::class, 'placeOrder'])->name('place.order');
 });
     
 

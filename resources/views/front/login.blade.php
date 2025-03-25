@@ -1,14 +1,28 @@
+@extends('front.layout.layout')
+
+@section('content')
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | Flavors On The Table</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+<head> <script src="https://cdn.tailwindcss.com"></script></head>
+<!-- Page Header Start -->
+<div class="page-header mb-0">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h2>Food Menu</h2>
+                    </div>
+                    <div class="col-12">
+                        <a href="{{url('/')}}">Home</a>
+                        <a href="{{url('/available_cooks')}}">Menu</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <div class="w-full max-w-md p-8 space-y-6 bg-white shadow-lg rounded-2xl">
+
+<div class="bg-gray-100 d-flex items-center justify-center mt-0">
+
+    <div class="w-full max-w-md p-8 space-y-6 bg-white  ">
         <!-- Logo -->
         <div class="text-center">
             <h1 class="text-4xl font-bold mt-2 " style="color:#FBAF32">Flavors On The Table</h1>
@@ -16,8 +30,25 @@
             <p class="text-gray-800">Login to continue</p>
         </div>
 
+        @if(Session::has('success message'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Success:</strong>{{ Session::get('success message') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            @endif
+
+        @if(Session::has('error message'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Error:</strong>{{ Session::get('error message') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        @endif
         <!-- Login Form -->
-        <form action="{{url('/login')}}" method="POST" class="space-y-4">
+        <form action="{{route('customer.login')}}" method="POST" class="space-y-4">
             @csrf
             <div>
                 <label for="email" class="block text-sm font-medium text-gray-600">Email Address</label>
@@ -50,5 +81,6 @@
         </div>
     </div>
 
-</body>
+</div>
 </html>
+@endsection

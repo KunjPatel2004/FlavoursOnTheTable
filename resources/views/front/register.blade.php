@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register | Flavors On The Table</title>
-    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
 
@@ -17,10 +16,10 @@
         </div>
 
         <!-- Registration Form -->
-        <form action="" method="POST" class="space-y-3">
+        <form action="{{ route('customer.register') }}" method="POST" class="space-y-3">
             @csrf
             <div>
-                <label for="name" class="block text-sm font-medium text-gray-600">Full Name</label>
+                <label for="name" class="block text-sm font-medium text-gray-600">Name</label>
                 <input type="text" id="name" name="name" required
                     class="w-full p-2 border border-gray-300 rounded-lg">
             </div>
@@ -40,12 +39,6 @@
             <div>
                 <label for="mobile" class="block text-sm font-medium text-gray-600">Mobile Number</label>
                 <input type="tel" id="mobile" name="mobile" required
-                    class="w-full p-2 border border-gray-300 rounded-lg">
-            </div>
-
-            <div>
-                <label for="address" class="block text-sm font-medium text-gray-600">Address</label>
-                <input type="address" id="address" name="address" required
                     class="w-full p-2 border border-gray-300 rounded-lg">
             </div>
 

@@ -14,12 +14,17 @@ return new class extends Migration
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable(); // Nullable for guest users
+            $table->string('session_id')->nullable(); // Unique session identifier for guests
             $table->unsignedBigInteger('food_id');
             $table->string('food_name');
             $table->decimal('price', 8, 2);
             $table->integer('quantity')->default(1);
             $table->decimal('subtotal', 8, 2);
             $table->timestamps();
+
+            // Indexing for performance
+            $table->index('user_id');
+            $table->index('session_id');
         });
     }
 

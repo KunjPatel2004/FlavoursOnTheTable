@@ -1,11 +1,14 @@
 $(document).ready(function () {
     $('.add-to-cart').click(function () {
         let food_id = $(this).data('id');
+
         $.ajax({
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             type:'POST',
-            url: "/add-to-cart",
-            data: { id: food_id },
+            url: '/cart/add',
+            data: {
+                food_id: food_id,
+            },
             success: function (response) {
                 if (response.status === 'success') {
                     Swal.fire({
@@ -14,41 +17,47 @@ $(document).ready(function () {
                         icon: "success",
                         showCancelButton: true,
                         confirmButtonText: "View Cart",
-                        cancelButtonText: "Continue Shopping",
+                        cancelButtonText: "Continue Shopping"
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            window.location.href = "/cart"; // Redirect to Cart Page
+                            window.location.href = "/cart/view";
                         }
                     });
-                } else {
-                    Swal.fire("Error", response.message, "error");
-                }
 
+                    $('#cart-count').text(response.cart_count);
+                }
             }
         });
     });
 
-    $('.update-cart').click(function () {
+    $('.update-cart').on('change', function () {
         let cart_id = $(this).data('id');
         let quantity = $(this).val();
+
         $.ajax({
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             type:'POST',
-            url: "/update-cart",
-            data: { cart_id: cart_id, quantity: quantity},
+            url: '/cart/update',
+            data: {
+                cart_id: cart_id,
+                quantity: quantity,
+            },
             success: function (response) {
-                location.reload();   
+                location.reload();
             }
         });
     });
 
-    $('.remove-cart').click(function () {
+    $('.remove-item').click(function () {
         let cart_id = $(this).data('id');
+
         $.ajax({
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             type:'POST',
-            url: "/remove-from-cart",
-            data: { cart_id: cart_id },
+            url: '/cart/remove',
+            data: {
+                cart_id: cart_id,
+            },
             success: function (response) {
                 location.reload();
             }

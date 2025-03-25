@@ -29,7 +29,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <h6 class="text-success mb-0">₹{{ $food->price }}</h6>
                     </div>
-                    <button class="btn btn-warning add-to-cart" 
+                    <button class="add-to-cart btn btn-warning " 
                         data-id="{{ $food->id }}">
                         Add to Cart
                     </button>

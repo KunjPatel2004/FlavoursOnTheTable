@@ -32,7 +32,7 @@
                         <thead>
                             <tr>
                             <th>ID</th>
-                            <th>Customer Id</th>
+                            <th>Customer Name</th>
                             <th>Cook Id</th>
                             <th>Food Items</th>
                             <th>Total Price</th>

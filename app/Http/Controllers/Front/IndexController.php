@@ -16,14 +16,6 @@ class IndexController extends Controller
         return view('front.index');
     }
 
-    public function login(Request $request){
-        return view('front.login');
-    }
-
-    public function register(){
-        return view('front.register');
-    }
-
     public function AvailableCooks(){
        Session::put('page','menu');
        $foods =FoodItem::all();
@@ -36,7 +28,6 @@ class IndexController extends Controller
        Session::put('page','menu');
         $selectedCook = Admin::findOrFail($cook_id);
         $menuItems = FoodItem::where('cook_id', $cook_id)->get();
-      
     
         return view('front.menu', compact('selectedCook', 'menuItems'));
     }
