@@ -3,7 +3,7 @@
 @section('content')
 <!DOCTYPE html>
 <html lang="en">
-<head> <script src="https://cdn.tailwindcss.com"></script></head>
+
 <!-- Page Header Start -->
 <div class="page-header mb-0">
             <div class="container">
@@ -17,70 +17,64 @@
                     </div>
                 </div>
             </div>
-        </div>
+</div>
 
+<body>
 
-<div class="bg-gray-100 d-flex items-center justify-center mt-0">
+<div class="container d-flex justify-content-center align-items-center mt-4" style="min-height: 60vh;">
+        <div class="col-md-5">
+            <div class="card shadow-lg p-4">
+                <div class="text-center mb-3">
+                    <h1 class="text fw-bold" style="color:#fbaf32">Flavors On The Table</h1>
+                    <h2 class="text-dark">Welcome Back!</h2>
+                    <p class="text-muted">Login to continue</p>
+                </div>
 
-    <div class="w-full max-w-md p-8 space-y-6 bg-white  ">
-        <!-- Logo -->
-        <div class="text-center">
-            <h1 class="text-4xl font-bold mt-2 " style="color:#FBAF32">Flavors On The Table</h1>
-            <h2 class="text-2xl font-bold text-gray-800 mt-2">Welcome Back!</h2>
-            <p class="text-gray-800">Login to continue</p>
-        </div>
+                @if(Session::has('success message'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong>Success:</strong> {{ Session::get('success message') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
 
-        @if(Session::has('success message'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>Success:</strong>{{ Session::get('success message') }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
+                @if(Session::has('error message'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Error:</strong> {{ Session::get('error message') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+
+                <form action="{{ url('/customer/login') }}" method="POST">
+                    @csrf
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email Address</label>
+                        <input type="email" id="email" name="email" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" id="password" name="password" class="form-control" required>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe">Remember me</label>
+                        </div>
+                        <a href="#" class="text text-decoration-none" style="color:#fbaf32">Forgot password?</a>
+                    </div>
+
+                    <button type="submit" class="btn w-100" style="background-color:#fbaf32">Login</button>
+                </form>
+
+                <div class="text-center mt-3">
+                    <p class="text-muted">Don't have an account? 
+                        <a href="{{ url('/customer/register') }}" class="text-decoration-none fw-bold" style="color:#fbaf32">Sign Up</a>
+                    </p>
+                </div>
             </div>
-            @endif
-
-        @if(Session::has('error message'))
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <strong>Error:</strong>{{ Session::get('error message') }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        @endif
-        <!-- Login Form -->
-        <form action="{{route('customer.login')}}" method="POST" class="space-y-4">
-            @csrf
-            <div>
-                <label for="email" class="block text-sm font-medium text-gray-600">Email Address</label>
-                <input type="email" id="email" name="email" required
-                    class="w-full p-3 border border-gray-300 rounded-lg">
-            </div>
-
-            <div>
-                <label for="password" class="block text-sm font-medium text-gray-600">Password</label>
-                <input type="password" id="password" name="password" required
-                    class="w-full p-3 border border-gray-300 rounded-lg">
-            </div>
-
-            <div class="flex items-center justify-between">
-                <label class="flex items-center text-sm text-gray-600">
-                    <input type="checkbox" class="mr-2"> Remember me
-                </label>
-                <a href="#" class="hover:underline text-sm" style="color:#FBAF32">Forgot password?</a>
-            </div>
-
-            <button type="submit"
-                class="w-full p-3 text-white rounded-lg hover:bg-orange-600 transition duration-200" style="background-color:#FBAF32">
-                Login
-            </button>
-        </form>
-        <!-- Register -->
-        <div class="text-center text-gray-600 text-sm">
-            Don't have an account?
-            <a href="{{url('/register')}}" class="hover:underline font-semibold" style="color:#FBAF32">Sign Up</a>
         </div>
     </div>
-
-</div>
+</body>
 </html>
 @endsection

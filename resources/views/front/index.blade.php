@@ -283,7 +283,7 @@
                                     </div>
                                     <div class="menu-item">
                                         <div class="menu-img">
-                                            <img src="{{ asset('img/menu-burger.jpg')}}" alt="Image">
+                                            <img src="{{ asset('front/img/menu-burger.jpg')}}" alt="Image">
                                         </div>
                                         <div class="menu-text">
                                             <h3><span>Double size burger</span> <strong>$11.00</strong></h3>

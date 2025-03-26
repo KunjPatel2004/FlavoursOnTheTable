@@ -64,14 +64,17 @@
         <script src="{{('front/mail/contact.js')}}"></script> -->
 
         <!-- Template Javascript -->
-        <script src="{{('front/js/main.js')}}"></script>
+        <script src="{{url('front/js/main.js')}}"></script>
 
         <!-- SweetAlert2 CSS & JS -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         <script src="{{url('front/js/cart.js')}}"></script>
+        <script src="{{url('front/js/custom.js')}}"></script>
         <script src="{{url('front/js/checkout.js')}}"></script>
+
+
 
     </body>
 </html>

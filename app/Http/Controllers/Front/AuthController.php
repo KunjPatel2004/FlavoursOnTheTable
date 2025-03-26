@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Admin;
+use App\Models\User;
+use Validator;
 use Session;
 use Auth;
 
@@ -32,34 +34,45 @@ class AuthController extends Controller
        return view('front.login'); // Customer login view
    }
 
-   // Customer Logout
-   public function logout()
-   {
-       Auth::logout();
-       return redirect("/customer/login")->with('success_message', 'You have logged out.');
-   }
-
    // Customer Registration
-   public function register(Request $request)
-   {
-       if ($request->isMethod('post')) {
-           $request->validate([
-               'name' => 'required',
-               'email' => 'required|email|unique:admins',
-               'password' => 'required|confirmed|min:6'
-           ]);
+    public function register(Request $request){
+        if ($request->ajax()) {
+ 
+            $validator = Validator::make($request->all(),[
+                'name' => 'required|string|max:150',
+                'email' => 'required|email|max:250|unique:users',
+                'mobile' => 'required|numeric|digits:10',
+                'password' => 'required|string|min:6',
+            ],
+            [
+                'email.email'=> 'Please Enter a valid email',
+            ]);
 
-           $customer = new Admin();
-           $customer->name = $request->name;
-           $customer->email = $request->email;
-           $customer->password = Hash::make($request->password); // Hashing the password
-           $customer->mobile = $request->mobile;
-           $customer->role = 'customer'; // Assign role as customer
-           $customer->save();
+            if($validator->passes()){
+                $data = $request->all();
+                $customer = new User();
+                $customer->name = $data['name'];
+                $customer->mobile = $data['mobile'];
+                $customer->email = $data['email'];
+                $customer->password = bcrypt($data['password']);
+                $customer->status = 1;
+                $customer->save();
 
-           return redirect("customer/login")->with('success_message', 'Registration successful. Please login.');
-       }
-
+                if(Auth::attempt(['email'=>$data['email'], 'password'=>$data['password']])){
+                    $redirectUrl = url('/cart');
+                    return response()->json(['status'=>true,'type'=>'success','redirectUrl'=>$redirectUrl]);
+                }
+            }else{
+                return response()->json(['status'=>false,'type'=>'validation',
+                'errors'=>$validator->messages()]);
+            }
+        }
        return view('front.register');
-   }
+    }
+
+      // Customer Logout
+    public function logout(){
+          Auth::logout();
+          return redirect("/customer/login")->with('success_message', 'You have logged out.');
+    }
 }

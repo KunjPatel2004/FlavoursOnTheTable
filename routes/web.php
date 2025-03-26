@@ -13,11 +13,11 @@ Route::get('/', function () {
 Route::namespace('App\Http\Controllers\Front')->group(function(){
     
     Route::get('/',[IndexController::class,'home']);
-    Route::match(['get', 'post'], '/customer/login', 'AuthController@login')->name('customer.login');
-    Route::get('/customer/logout', 'AuthController@logout')->name('customer.logout');
-    Route::match(['get', 'post'], '/customer/register', 'AuthController@register')->name('customer.register');
+    Route::match(['get', 'post'], '/customer/login', 'AuthController@login');
+    Route::get('/customer/logout', 'AuthController@logout');
+    Route::match(['get', 'post'], '/customer/register', 'AuthController@register');
     
-    Route::get('/available_cooks',[IndexController::class,'AvailableCooks']);
+    Route::match(['get', 'post'],'/available_cooks',[IndexController::class,'AvailableCooks']);
     Route::get('/cooks/{cook_id}/menu', [IndexController::class, 'Menu'])->name('cooks.menu');
 
     Route::post('/cart/add', [CartController::class, 'addToCart']);
