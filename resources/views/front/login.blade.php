@@ -20,7 +20,15 @@
 </div>
 
 <body>
-
+            @if(request()->has('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                 <strong>Success:</strong> {{ request()->get('success')  }}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+             </div>
+          @endif
+        
 <div class="container d-flex justify-content-center align-items-center mt-4" style="min-height: 60vh;">
         <div class="col-md-5">
             <div class="card shadow-lg p-4">
@@ -29,37 +37,30 @@
                     <h2 class="text-dark">Welcome Back!</h2>
                     <p class="text-muted">Login to continue</p>
                 </div>
-
-                @if(Session::has('success message'))
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <strong>Success:</strong> {{ Session::get('success message') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                @endif
-
-                @if(Session::has('error message'))
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <strong>Error:</strong> {{ Session::get('error message') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                @endif
-
-                <form action="{{ url('/customer/login') }}" method="POST">
-                    @csrf
+                <p id="login-error"></p>
+                <form  id="loginForm" action="javascript:;" method="POST">@csrf
+                   
                     <div class="mb-3">
                         <label for="email" class="form-label">Email Address</label>
-                        <input type="email" id="email" name="email" class="form-control" required>
+                        <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email"
+                        value="<?php if(isset($_COOKIE['user-email'])){
+                            echo $_COOKIE['user-email'];}?>">
+                        <p class="login-email"></p>
                     </div>
 
                     <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
-                        <input type="password" id="password" name="password" class="form-control" required>
+                        <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password"
+                        value="<?php if(isset($_COOKIE['user-password'])){
+                            echo $_COOKIE['user-password'];}?>">
+                        <p class="login-password"></p>
                     </div>
 
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="rememberMe">
-                            <label class="form-check-label" for="rememberMe">Remember me</label>
+                            <input type="checkbox" class="form-check-input" id="remember-me" name="remember-me" 
+                            @if(isset($_COOKIE["user-email"])) checked="" @endif>
+                            <label class="form-check-label" for="remember-me">Remember me</label>
                         </div>
                         <a href="#" class="text text-decoration-none" style="color:#fbaf32">Forgot password?</a>
                     </div>

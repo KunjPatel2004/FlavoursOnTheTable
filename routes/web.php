@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Front\IndexController;
 use App\Http\Controllers\Front\CartController;
 use App\Http\Controllers\Front\OrderController;
+use App\Http\Controllers\Front\AuthController;
 
 
 Route::get('/', function () {
@@ -13,8 +14,8 @@ Route::get('/', function () {
 Route::namespace('App\Http\Controllers\Front')->group(function(){
     
     Route::get('/',[IndexController::class,'home']);
-    Route::match(['get', 'post'], '/customer/login', 'AuthController@login');
-    Route::get('/customer/logout', 'AuthController@logout');
+    Route::match(['get', 'post'], '/customer/login', 'AuthController@login')->name('login');
+   
     Route::match(['get', 'post'], '/customer/register', 'AuthController@register');
     
     Route::match(['get', 'post'],'/available_cooks',[IndexController::class,'AvailableCooks']);
@@ -28,6 +29,13 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
     Route::get('/cart', [CartController::class, 'viewCart'])->name('cart');
     Route::get('/checkout', [OrderController::class, 'checkout'])->name('checkout');
     Route::post('/place-order', [OrderController::class, 'placeOrder'])->name('place.order');
+
+    Route::group(['middleware'=>['auth']],function(){
+        Route::get('/customer/logout', 'AuthController@logout');
+        //Customer Account
+        Route::get('/customer/account',[AuthController::class,'CustomerAccount']);
+    });
+   
 });
     
 

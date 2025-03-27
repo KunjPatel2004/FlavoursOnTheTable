@@ -75,7 +75,7 @@
 
             <div class="text-center mt-3">
                 <p class="text-muted">Already have an account? 
-                    <a href="{{ url('/login') }}" class="text text-decoration-none fw-bold" style="color:#fbaf32">Login</a>
+                    <a href="{{ url('/customer/login') }}" class="text text-decoration-none fw-bold" style="color:#fbaf32">Login</a>
                 </p>
             </div>
         </div>

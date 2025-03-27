@@ -29,7 +29,6 @@
     </head>
 
     <body>
-        
         <!-- Nav Bar Start -->
         @include('front.layout.header')
         <!-- Nav Bar End -->

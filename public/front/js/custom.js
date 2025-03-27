@@ -28,4 +28,37 @@ $(document).ready(function (){
        }
     });
     });
+
+
+    //Login Form Validation
+    $("#loginForm").submit(function(){
+      var formData = $(this).serialize();
+
+      $.ajax({
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        url:'/customer/login',
+        type:'post',
+        data:formData,
+        success:function(response){
+          if(response.type=="error"){
+            $.each(response.errors, function (i,error){
+              $('.login-'+i).attr('style','color:red');
+              $('.login-'+i).html(error);
+              setTimeout(function(){
+                  $('.login-'+i).css({
+                      'display':'none'
+                  })
+              }, 5000);
+          });
+          }else if(response.type=="incorrect"){
+            $("#login-error").attr('style','color:red');
+            $("#login-error").html(response.message);
+          }else if(response.type=="success"){
+            window.location.href=response.redirectUrl;
+          }
+        },error:function(){
+          alert("Error");
+        }
+      })
+    });
 });

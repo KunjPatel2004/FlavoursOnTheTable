@@ -15,23 +15,44 @@ class AuthController extends Controller
    // Customer Login
    public function login(Request $request)
    {
-       if ($request->isMethod('post')) {
-           $request->validate([
-               'email' => 'required|email|max:255',
-               'password' => 'required|max:30'
-           ]);
+       if ($request->ajax()) {
+          $data = $request->all();
 
-           $customer = Admin::where('email', $request->email)
-                            ->where('role', 'customer') // Only allow customers to log in
-                            ->first();
+          $validator = Validator::make($request->all(),[
+            'email' => 'required|email|max:250|exists:users',
+            'password' => 'required|min:6',
+        ],
+        [
+            'email.exists'=> 'Email does not exists',
+        ]);
 
-           if ($customer && Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-               return redirect("/")->with('success_message', 'Login Successful!');
-           } else {
-               return redirect()->back()->with("error_message", "Invalid Email or Password");
-           }
+        if($validator->passes()){
+
+            //Remember email and password
+            if(!empty($data['remember-me'])){
+                setcookie("user-email",$data['email'],time()+3600);
+                setcookie("user-password",$data['password'],time()+3600);
+            }else{
+                setcookie("user-email");
+                setcookie("user-password");
+            }
+
+            if(Auth::attempt(['email'=>$data['email'], 'password'=>$data['password']])){
+                $redirectUrl = url('/');
+                return response()->json(['status' => true, 'type' => 'success', 'redirectUrl' => $redirectUrl]);
+            
+            }else{
+                return response()->json(['status'=>false,'type'=>'incorrect',
+                'message'=>'You entered wrong email or password!']);
+            }
+            
+        }else{
+            return response()->json(['status'=>false,'type'=>'error',
+            'errors'=>$validator->messages()]);
+        }
+
        }
-       return view('front.login'); // Customer login view
+       return view('front.login'); 
    }
 
    // Customer Registration
@@ -59,9 +80,10 @@ class AuthController extends Controller
                 $customer->save();
 
                 if(Auth::attempt(['email'=>$data['email'], 'password'=>$data['password']])){
-                    $redirectUrl = url('/cart');
-                    return response()->json(['status'=>true,'type'=>'success','redirectUrl'=>$redirectUrl]);
+                    $redirectUrl = url('/customer/login?success= Registration successful! You can login now.');
+                    return response()->json(['status' => true, 'type' => 'success', 'redirectUrl' => $redirectUrl]);
                 }
+
             }else{
                 return response()->json(['status'=>false,'type'=>'validation',
                 'errors'=>$validator->messages()]);
@@ -74,5 +96,9 @@ class AuthController extends Controller
     public function logout(){
           Auth::logout();
           return redirect("/customer/login")->with('success_message', 'You have logged out.');
+    }
+
+    public function CustomerAccount(){
+    return view('front.customer_account');
     }
 }
