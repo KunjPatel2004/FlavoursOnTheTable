@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Cart;
 use App\Models\Order;
+use App\Models\User;
 use App\Models\OrderItem;
 use Auth;
 use Session;
@@ -27,7 +28,7 @@ class OrderController extends Controller
             })->get();
     
             if ($cartItems->isEmpty()) {
-                return redirect()->route('cart')->with('error', 'Your cart is empty.');
+                return redirect()->route('cart')->with('error message', 'Your cart is empty.');
             }
     
             $totalPrice = $cartItems->sum('subtotal');
@@ -48,17 +49,19 @@ class OrderController extends Controller
             }
         })->get();
     
-        if ($cartItems->isEmpty()) {
+        if ($cartItems->isEmpty()){
             return redirect()->route('cart')->with('error', 'Your cart is empty.');
         }
+
+        $user = $user_id ? User::find($user_id) : null;
     
         // Store Order
         $order = Order::create([
             'user_id' => $user_id,
             'session_id' => $user_id ? null : $session_id,
-            'customer_name' => $request->customer_name ?? null,
-            'mobile' => $request->mobile ?? null,
-            'address' => $request->address ?? null,
+            'customer_name' => $user ? $user->name : $request->customer_name,  
+            'mobile' => $user ? $user->mobile : $request->mobile,
+            'address' => $user ? $user->address : $request->address,
             'total_price' => $cartItems->sum('subtotal'),
             'status' => 'Order Placed'
         ]);
@@ -83,6 +86,23 @@ class OrderController extends Controller
             }
         })->delete();
     
-        return redirect()->route('cart')->with('success', 'Order placed successfully.');
+        return redirect()->route('cart')->with('success message', 'Order placed successfully.');
+    }
+
+    public function myOrders()
+    {
+        $user_id = auth()->id();
+
+        if (!$user_id) {
+            return redirect()->route('login')->with('error', 'Please log in to view your orders.');
+        }
+
+        // Fetch orders of logged-in user
+        $orders = Order::where('user_id', $user_id)
+            ->orderBy('created_at', 'desc')
+            ->with('orderItems.foodItem')
+            ->get();
+
+        return view('front.my-orders', compact('orders'));
     }
 }

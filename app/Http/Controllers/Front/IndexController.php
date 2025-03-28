@@ -25,7 +25,7 @@ class IndexController extends Controller
 
     public function Menu($cook_id)
     {
-       Session::put('page','menu');
+       
         $selectedCook = Admin::findOrFail($cook_id);
         $menuItems = FoodItem::where('cook_id', $cook_id)->get();
     

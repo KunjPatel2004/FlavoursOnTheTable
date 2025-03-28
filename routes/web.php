@@ -29,11 +29,15 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
     Route::get('/cart', [CartController::class, 'viewCart'])->name('cart');
     Route::get('/checkout', [OrderController::class, 'checkout'])->name('checkout');
     Route::post('/place-order', [OrderController::class, 'placeOrder'])->name('place.order');
+    
+    Route::get('/my-orders', [OrderController::class, 'myOrders'])->name('my.orders');
+
 
     Route::group(['middleware'=>['auth']],function(){
         Route::get('/customer/logout', 'AuthController@logout');
         //Customer Account
-        Route::get('/customer/account',[AuthController::class,'CustomerAccount']);
+        Route::match(['get','post'],'/customer/account',[AuthController::class,'CustomerAccount']);
+        Route::match(['get','post'],'/customer/update_password',[AuthController::class,'UpdatePassword']);
     });
    
 });

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Admin;
 use App\Models\Order;
+use App\Models\User;
 use Auth;
 use Session;
 use Image;
@@ -17,7 +18,7 @@ class AdminController extends Controller
         Session::put('page','dashboard');
         $ordercount = Order::all()->count();
         $cookcount = Admin::where('role','cook')->count();
-        $customercount = Admin::where('role','customer')->count();
+        $customercount = User::all()->count();
         return view('admin.dashboard')->with(compact('ordercount','cookcount','customercount'));
     }
 
@@ -106,7 +107,7 @@ class AdminController extends Controller
 
     public function CustomerDetails(){
         Session::put('page','customer_details');
-        $customerdetails= Admin::where('role','customer')->get();
+        $customerdetails= User::all();
         return view('admin.customer.manage_customers')->with(compact('customerdetails'));
     }
 
@@ -119,7 +120,7 @@ class AdminController extends Controller
             }else{
                 $status= 1;
             }
-            Admin::where('id',$data['page_id'])->update(['status'=>$status]);
+            User::where('id',$data['page_id'])->update(['status'=>$status]);
             return response()->json(['status'=>$status,'page_id'=>$data['page_id']]);
         }
     }

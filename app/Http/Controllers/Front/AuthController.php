@@ -9,6 +9,7 @@ use App\Models\User;
 use Validator;
 use Session;
 use Auth;
+use Hash;
 
 class AuthController extends Controller
 {
@@ -52,7 +53,7 @@ class AuthController extends Controller
         }
 
        }
-       return view('front.login'); 
+       return view('front.customer.login'); 
    }
 
    // Customer Registration
@@ -89,7 +90,7 @@ class AuthController extends Controller
                 'errors'=>$validator->messages()]);
             }
         }
-       return view('front.register');
+       return view('front.customer.register');
     }
 
       // Customer Logout
@@ -98,7 +99,73 @@ class AuthController extends Controller
           return redirect("/customer/login")->with('success_message', 'You have logged out.');
     }
 
-    public function CustomerAccount(){
-    return view('front.customer_account');
+    public function CustomerAccount(Request $request){
+        Session::put('page', 'update_account');
+        if($request->ajax()){
+            $data = $request->all();
+
+            $validator = Validator::make($request->all(),[
+                'name' => 'required|string|max:150',
+                'address' => 'required|string|max:150',
+                'city' => 'required|string|max:150',
+                'state' => 'required|string|max:150',
+                'pincode' => 'required|string|max:150',
+                'mobile' => 'required|numeric|digits:10',
+            ]);
+
+            if($validator->passes()){
+                User::where('id',Auth::user()->id)->update(['name'=>$data['name'],
+                'address'=>$data['address'],'city'=>$data['city'],'state'=>$data['state'],
+                'pincode'=>$data['pincode'],'mobile'=>$data['mobile'],]);
+
+                return response()->json(['status'=>true,'type'=>'success','message'=>'Your details are updated successfully!']);
+
+            }else{
+                return response()->json(['status'=>false,'type'=>'validation',
+                'errors'=>$validator->messages()]);
+            }
+
+        }else{   
+                return view('front.customer.customer_account');
+        }
+    }
+
+    public function UpdatePassword(Request $request){
+        Session::put('page', 'update_password');
+        if($request->ajax()){
+            $data = $request->all();
+            $validator = Validator::make($request->all(),[
+                'current_password' => 'required',
+                'new_password' => 'required|min:6',
+                'confirm_password' => 'required|same:new_password',
+            ]);
+
+            if($validator->passes()){
+                //Password entered by user
+                $current_password = $data['current_password'];
+                
+                //Password from users table
+                $checkPassword = User::where('id',Auth::user()->id)->first();
+
+                //Compare current password
+                if(Hash::check($current_password,$checkPassword->password)){
+                    $user = User::find(Auth::user()->id);
+                    $user->password = bcrypt($data['new_password']);
+                    $user->save();
+
+                    return response()->json(['type'=>'success','message'=>'Your password is updated successfully!']);
+
+                }else{
+                    return response()->json(['type'=>'incorrect','message'=>'Your current password is incorrect!']);
+                }
+
+            }else{
+                return response()->json(['type'=>'validation','errors'=>$validator->messages()]);
+            }
+
+        }else{
+            return view('front.customer.update_password');
+        }
+
     }
 }
