@@ -22,7 +22,7 @@
                 <h5>Hello, {{ Auth::user()->name }}</h5>
                 <ul class="list-unstyled mt-3">
                     <li><a href="{{url('/customer/update_account')}}" class="text-decoration-none  {{ Session::get('page') == 'update_account' ? 'active text-success' : '' }}">My Billing/Contact Address</a></li>
-                    <li><a href="#" class="text-decoration-none">My Orders</a></li>
+                    <li><a href="{{url('/my-orders')}}" class="text-decoration-none">My Orders</a></li>
                     <li><a href="{{url('/customer/update_password')}}" class="text-decoration-none">Update Password</a></li>
                 </ul>
             </div>

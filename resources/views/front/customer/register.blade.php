@@ -26,7 +26,7 @@
             <div class="text-center mb-3">
                 <h1 class="text fw-bold" style="color:#fbaf32">Flavors On The Table</h1>
                 <h2 class="text-dark">Create an Account</h2>
-                <p class="text-muted">Register to start ordering delicious food</p>
+                <p class="text-muted">Signup to start ordering delicious food</p>
             </div>
 
             @if(Session::has('success_message'))
@@ -70,7 +70,7 @@
                     <p id="register-password"></p>
                 </div>
 
-                <button type="submit" class="btn w-100" style="background-color:#fbaf32">Register</button>
+                <button type="submit" class="btn w-100" style="background-color:#fbaf32">Sign up</button>
             </form>
 
             <div class="text-center mt-3">

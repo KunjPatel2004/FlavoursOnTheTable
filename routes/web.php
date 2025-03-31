@@ -32,6 +32,12 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
     
     Route::get('/my-orders', [OrderController::class, 'myOrders'])->name('my.orders');
 
+    Route::get('/privacy-policy', [IndexController::class, 'PrivacyPolicy']);
+    Route::get('/terms&conditions', [IndexController::class, 'Terms_Conditions']);
+    Route::get('/help&support', [IndexController::class, 'Help_Support']);
+    Route::get('/cookies', [IndexController::class, 'Cookies']);
+
+    
 
     Route::group(['middleware'=>['auth']],function(){
         Route::get('/customer/logout', 'AuthController@logout');
@@ -76,7 +82,7 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::match(['get','post'],'manage_order','CookController@Manage_Orders');
         Route::get("delete-orderdetail/{id?}",'CookController@delete_order');
         Route::match(['get','post'],"view-order-details/{id?}",'CookController@view_order');
-        Route::post('update-status','CookController@updateorderstatus');
+        Route::post('update-order-status','CookController@updateorderstatus');
        
         
      });

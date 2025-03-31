@@ -74,28 +74,37 @@ $(document).ready(function(){
        })                           
     });
 
+   
+    $(".status-dropdown").change(function() {
+        let orderId = $(this).data("id");
+        let newStatus = $(this).val();
+        let dropdown = $(this);
 
-    $('.status-dropdown').change(function(){
-        var orderId = $(this).attr("page_id");
-        var newStatus = $(this).children("option").attr("value");
-      
-        $.ajax({ 
+        $.ajax({
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             type:'post',
-            url:'/admin/update-status',
-            data:{order_id:orderId,status:newStatus},
+            url: "/admin/update-order-status",
+            data: {
+                order_id: orderId,
+                status: newStatus
+            },
+            success: function (response) {
+                if (response.success) {
+                    alert("Order status updated successfully!");
+                    
+                 
+                    dropdown.val(response.updated_status);
 
-            success:function(response){
-                if(response.success){
-               $("#page-"+ orderId).text(newStatus);
-               alert(response.message);
+                } else {
+                    alert("Failed to update status.");
                 }
-            },error:function() {
-                alert('Failed to update status');
+            },
+            error: function () {
+                alert("Something went wrong!");
             }
-        })
-    })
+        });
 
-
+    });
+    
    
 });

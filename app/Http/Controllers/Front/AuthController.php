@@ -20,7 +20,7 @@ class AuthController extends Controller
           $data = $request->all();
 
           $validator = Validator::make($request->all(),[
-            'email' => 'required|email|max:250|exists:users',
+            'email' => 'required|email|max:250|exists:users|lowercase|regex:/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/',
             'password' => 'required|min:6',
         ],
         [
@@ -60,15 +60,14 @@ class AuthController extends Controller
     public function register(Request $request){
         if ($request->ajax()) {
  
-            $validator = Validator::make($request->all(),[
-                'name' => 'required|string|max:150',
-                'email' => 'required|email|max:250|unique:users',
-                'mobile' => 'required|numeric|digits:10',
-                'password' => 'required|string|min:6',
-            ],
-            [
-                'email.email'=> 'Please Enter a valid email',
-            ]);
+            $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:150',
+            'email' => 'required|email|max:250|unique:users|lowercase|regex:/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/',
+            'mobile' => 'required|numeric|digits:10',
+            'password' => 'required|string|min:6',
+        ], [
+            'email.email' => 'Please enter a valid email',
+        ]);
 
             if($validator->passes()){
                 $data = $request->all();
@@ -94,8 +93,12 @@ class AuthController extends Controller
     }
 
       // Customer Logout
-    public function logout(){
+    public function logout(Request $request){
           Auth::logout();
+           session()->forget('cartItem');
+          $request->session()->invalidate();
+          $request->session()->regeneratetoken();
+
           return redirect("/customer/login")->with('success_message', 'You have logged out.');
     }
 

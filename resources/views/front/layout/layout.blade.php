@@ -73,7 +73,13 @@
         <script src="{{url('front/js/custom.js')}}"></script>
         <script src="{{url('front/js/checkout.js')}}"></script>
 
-
+        <script>
+            window.addEventListener("pageshow", function(event){
+                if(event.persisted){
+                    location.reload();
+                }
+            });
+        </script>
 
     </body>
 </html>

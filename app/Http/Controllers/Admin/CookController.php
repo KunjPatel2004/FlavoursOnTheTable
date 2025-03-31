@@ -2,8 +2,6 @@
  
 
 namespace App\Http\Controllers\Admin;
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Admin;
@@ -87,29 +85,26 @@ class CookController extends Controller
    
     public function Manage_Orders(){
         Session::put('page','manage_orders');
-        $manageorder = Order::all();
+         $user = auth('admin')->user(); // Get the logged-in user
+
+        if ($user->role === 'admin') {
+            
+            $manageorder = Order::with('orderItems.foodItem', 'customer')->get();
+        } elseif ($user->role === 'cook') {
+            // Cook sees only orders containing their food items
+            $manageorder = Order::whereHas('orderItems.foodItem', function ($query) use ($user) {
+                $query->where('cook_id', $user->id);
+            })->with('orderItems.foodItem')->get();
+        } else {
+            return abort(403, 'Unauthorized action.');
+        }
       
         return view('admin.order.manage_orders')->with(compact('manageorder'));
     }
 
     public function view_order(Request $request,$id=null){
         Session::put('page','manage_orders');
-        if($id){
-            $title = "View Order Details";
-            $orderpage = Order::find($id);            
-        }
-
-        if($request->isMethod('post')){
-            $data = $request->all();
-        
-            $orderpage->customer_name = $data['customer_name'];
-            $orderpage->cook_name = $data['cook_name'];
-            $orderpage->totalfooditems = $data['totalfooditems'];   
-            $orderpage->total_price = $data['total_price'];   
-            $orderpage->status = $data['status-dropdown'];
-            $orderpage->save();
-            return redirect('admin/manage_order')->with('success message',"Status Updated successfully");
-        }
+       
         return view('admin.order.view_order')->with(compact('title','orderpage'));
     }
 
@@ -119,14 +114,26 @@ class CookController extends Controller
     }
 
     public function updateorderstatus(Request $request){
-        echo"<prev>"; print_r($request);die;
-      // if($request->ajax()){
-      //     $data = $request->all();    
-      //     $order = $data['status'];
-      //     $order->save(); 
-      //     Order::where('id',$data['orderId'])->update(['status'=>$order]);
-      //     return response()->json(['success' => true, 'message' => 'Order status updated successfully!']);
-      // }
-     
-  }
+
+        if ($request->ajax()) {
+            $order = Order::find($request->order_id);
+    
+            if ($order) {
+                $order->status = $request->status;
+                $order->save();
+    
+                return response()->json([
+                    'success' => true, 
+                    'message' => 'Order status updated successfully!',
+                    'updated_status' => $order->status // Send back updated status
+                ]);
+            } else {
+                return response()->json([
+                    'success' => false, 
+                    'message' => 'Order not found!'
+                ]);
+            }
+        }
+      
+    }
 }

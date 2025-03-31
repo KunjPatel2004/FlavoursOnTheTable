@@ -1133,7 +1133,7 @@ a:focus {
     background: #ffffff;
     border-radius: 15px;
     box-shadow: 0 0 15px rgba(0, 0, 0, .08);
-    transition: .3s;
+    transition: 15s;
     overflow: hidden;
 }
 

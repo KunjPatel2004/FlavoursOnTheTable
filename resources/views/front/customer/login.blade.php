@@ -35,7 +35,7 @@
                 <div class="text-center mb-3">
                     <h1 class="text fw-bold" style="color:#fbaf32">Flavors On The Table</h1>
                     <h2 class="text-dark">Welcome Back!</h2>
-                    <p class="text-muted">Login to continue</p>
+                    <p class="text-muted">Signin to continue</p>
                 </div>
                 <p id="login-error"></p>
                 <form  id="loginForm" action="javascript:;" method="POST">@csrf
@@ -65,7 +65,7 @@
                         <a href="#" class="text text-decoration-none" style="color:#fbaf32">Forgot password?</a>
                     </div>
 
-                    <button type="submit" class="btn w-100" style="background-color:#fbaf32">Login</button>
+                    <button type="submit" class="btn w-100" style="background-color:#fbaf32">Sign in</button>
                 </form>
 
                 <div class="text-center mt-3">
