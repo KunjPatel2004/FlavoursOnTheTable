@@ -14,16 +14,19 @@ class FoodItemTableSeeder extends Seeder
     public function run(): void
     {
         $foodItemsRecords=[
-            ['id'=>1,'cook_id'=>'2','name'=>'Pizza','description'=>'Content coming soon','price'=>200,
+            ['id'=>8,'cook_id'=>'2','name'=>'Chicken Lasagna','description'=>'Content coming soon','price'=>450,
             'image'=>'','status'=>'Available'],
 
-            ['id'=>2,'cook_id'=>'3','name'=>'Burger','description'=>'Content coming soon','price'=>150,
+            ['id'=>9,'cook_id'=>'7','name'=>'BBQ Chicken Pizza','description'=>'Content coming soon','price'=>480,
             'image'=>'','status'=>'Available'],
 
-            ['id'=>3,'cook_id'=>'2','name'=>'Noodles','description'=>'Content coming soon','price'=>180,
+            ['id'=>10,'cook_id'=>'7','name'=>'Chicken Sweet Corn Soup','description'=>'Content coming soon','price'=>160,
             'image'=>'','status'=>'Available'],
 
-            ['id'=>4,'cook_id'=>'3','name'=>'Mexican rice','description'=>'Content coming soon','price'=>280,
+            ['id'=>11,'cook_id'=>'8','name'=>'Mexican rice','description'=>'Content coming soon','price'=>280,
+            'image'=>'','status'=>'Available'],
+
+            ['id'=>12,'cook_id'=>'8','name'=>'Chilli Panner','description'=>'Content coming soon','price'=>200,
             'image'=>'','status'=>'Available'],
         ];
 

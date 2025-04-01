@@ -24,7 +24,7 @@
                         
                         @if(Auth::check())
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="{{url('/customer/account')}}">
+                            <a class="dropdown-item d-flex align-items-center" href="{{url('/customer/update_account')}}">
                             <i class="fas fa-user-circle me-2 text-primary"></i>My Account
                             </a>
                                

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Admin;
 use App\Models\User;
+use App\Models\Address;
 use Validator;
 use Session;
 use Auth;
@@ -56,7 +57,6 @@ class AuthController extends Controller
        return view('front.customer.login'); 
    }
 
-   // Customer Registration
     public function register(Request $request){
         if ($request->ajax()) {
  
@@ -92,7 +92,6 @@ class AuthController extends Controller
        return view('front.customer.register');
     }
 
-      // Customer Logout
     public function logout(Request $request){
           Auth::logout();
            session()->forget('cartItem');
@@ -110,8 +109,10 @@ class AuthController extends Controller
             $validator = Validator::make($request->all(),[
                 'name' => 'required|string|max:150',
                 'address' => 'required|string|max:150',
+                'address_2' => 'nullable|string|max:255', 
                 'city' => 'required|string|max:150',
                 'state' => 'required|string|max:150',
+                'country' => 'required|string|max:150',
                 'pincode' => 'required|string|max:150',
                 'mobile' => 'required|numeric|digits:10',
             ]);
@@ -119,7 +120,7 @@ class AuthController extends Controller
             if($validator->passes()){
                 User::where('id',Auth::user()->id)->update(['name'=>$data['name'],
                 'address'=>$data['address'],'city'=>$data['city'],'state'=>$data['state'],
-                'pincode'=>$data['pincode'],'mobile'=>$data['mobile'],]);
+                'country'=>$data['country'],'pincode'=>$data['pincode'],'mobile'=>$data['mobile'],]);
 
                 return response()->json(['status'=>true,'type'=>'success','message'=>'Your details are updated successfully!']);
 
@@ -169,6 +170,104 @@ class AuthController extends Controller
         }else{
             return view('front.customer.update_password');
         }
+    }
 
+    public function index()
+    {
+        $user = Auth::user();
+        $addresses = $user->addresses; // Fetch addresses from the addresses table
+
+        return view('front.customer.addresses', compact('user', 'addresses'));
+    }
+
+    public function create()
+    {
+        $user = Auth::user();
+
+        if ($user->addresses->count() >= 2) {
+            return redirect()->route('customer.addresses')->with('error', 'You can only have 3 addresses.');
+        }
+
+        return view('front.customer.add_address');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'address' => 'required|string',
+            'city' => 'required|string',
+            'state' => 'required|string',
+            'country' => 'required|string',
+            'pincode' => 'required|string',
+        ]);
+
+        $user = Auth::user();
+
+        if (empty($user->address)) {
+            // If user has no address, store the first address in users table as default
+            $user->update([
+                'address' => $request->address,
+                'city' => $request->city,
+                'state' => $request->state,
+                'country' => $request->country,
+                'pincode' => $request->pincode,
+            ]);
+            return redirect()->route('customer.addresses')->with('success', 'Address added successfully!');
+        }
+
+        // Otherwise, store it in the addresses table
+        if ($user->addresses->count() >= 2) {
+            return redirect()->route('customer.addresses')->with('error', 'You can only add up to 2 additional addresses.');
+        }
+
+        Address::create([
+            'user_id' => $user->id,
+            'address' => $request->address,
+            'city' => $request->city,
+            'state' => $request->state,
+            'country' => $request->country,
+            'pincode' => $request->pincode,
+            'is_default' => false
+        ]);
+
+        return redirect()->route('customer.addresses')->with('success', 'Address added successfully!');
+    }
+
+    public function setDefaultAddress($id)
+    {
+        $user = Auth::user();
+        $address = Address::findOrFail($id);
+
+        if ($address->user_id !== $user->id) {
+            return redirect()->back()->with('error', 'Unauthorized action!');
+        }
+
+        // Move previous default address (from `users` table) to `addresses` table
+        Address::create([
+            'user_id' => $user->id,
+            'address' => $user->address,
+            'city' => $user->city,
+            'state' => $user->state,
+            'country' => $user->country,
+            'pincode' => $user->pincode,
+            'is_default' => false
+        ]);
+
+        // Set all other addresses' `is_default` to false
+        Address::where('user_id', $user->id)->update(['is_default' => false]);
+
+        // Update the new default address in `users` table
+        $user->update([
+            'address' => $address->address,
+            'city' => $address->city,
+            'state' => $address->state,
+            'country' => $address->country,
+            'pincode' => $address->pincode,
+        ]);
+
+        // Delete the address that was moved to the users table
+        $address->delete();
+
+        return redirect()->route('customer.addresses')->with('success', 'Default address updated successfully!');
     }
 }

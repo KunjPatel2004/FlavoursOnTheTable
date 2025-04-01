@@ -2,21 +2,23 @@
         <div class="container">
             <div class="row">
                 <!-- Brand and Tagline -->
-                <div class="col-lg-4 text-center">
-                    <h2 style="color:#fbaf32" class="footer-brand">Flavors On The Table</h2>
-                    <p class="footer-tagline">
-                        "Flavors On The Table is a unique online platform that connects food lovers with talented home cooks. 
-                        Enjoy fresh, homemade meals prepared with love and passion, delivered right to your doorstep!"
-                    </p>
+                <div class="col-lg-4">
+                    <div class="footer-contact">
+                        <h2>Flavors On The Table</h2>
+                        <p class="footer-tagline text-center">
+                        Welcome to Flavors On The Table, the ultimate platform that connects food lovers with talented cooks.
+                        Our user-friendly interface offers a seamless experience, allowing you to browse menus, place orders, track your meals in real-time,
+                        and enjoy exclusive rewards with every purchase.</p>
+                   </div>
                 </div>
                 
                 <!-- Contact Section -->
                 <div class="col-lg-4">
                     <div class="footer-contact">
                         <h2>Our Address</h2>
-                        <p><i class="fa fa-map-marker-alt"></i> 123 Street, New York, USA</p>
-                        <p><i class="fa fa-phone-alt"></i> +012 345 67890</p>
-                        <p><i class="fa fa-envelope"></i> info@example.com</p>
+                        <p><i class="fa fa-map-marker-alt"></i> Memnagar, Gujarat, India</p>
+                        <p><i class="fa fa-phone-alt"></i> +91 9334567890</p>
+                        <p><i class="fa fa-envelope"></i> admin@gmail.com</p>
                         <div class="footer-social">
                             <a href="#"><i class="fab fa-twitter"></i></a>
                             <a href="#"><i class="fab fa-facebook-f"></i></a>

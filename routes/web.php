@@ -42,8 +42,15 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
     Route::group(['middleware'=>['auth']],function(){
         Route::get('/customer/logout', 'AuthController@logout');
         //Customer Account
-        Route::match(['get','post'],'/customer/account',[AuthController::class,'CustomerAccount']);
+        Route::match(['get','post'],'/customer/update_account',[AuthController::class,'CustomerAccount']);
         Route::match(['get','post'],'/customer/update_password',[AuthController::class,'UpdatePassword']);
+
+        Route::get('/customer/addresses', [AuthController::class, 'index'])->name('customer.addresses');
+        Route::get('/customer/add-address', [AuthController::class, 'create'])->name('customer.addAddress');
+        Route::post('/customer/store-address', [AuthController::class, 'store'])->name('customer.storeAddress');
+        Route::post('/customer/set-default-address/{id}', [AuthController::class, 'setDefaultAddress'])->name('customer.setDefaultAddress');
+    
+
     });
    
 });

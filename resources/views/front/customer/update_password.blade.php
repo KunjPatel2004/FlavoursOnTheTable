@@ -21,10 +21,10 @@
             <div class="card p-3 shadow-sm">
                 <h5>Hello, {{ Auth::user()->name }}</h5>
                 <ul class="list-unstyled mt-3">
-                    <li><a href="{{ url('/customer/account') }}" class="text-decoration-none">My Billing/Contact Address</a></li>
+                    <li><a href="{{url('/customer/update_account')}}" class="text-decoration-none">My Contact Details</a></li>
                     <li><a href="{{url('/my-orders')}}" class="text-decoration-none">My Orders</a></li>
-                    <li><a href="{{ url('/customer/update_password') }}" class="text-decoration-none fw-bold 
-                    {{ Session::get('page') == 'update_password' ? 'active text-success' : '' }}">Update Password</a></li>
+                    <li><a href="{{url('/customer/update_password')}}" class="text-decoration-none">Update Password</a></li>
+                    <li><a href="{{url('/customer/addresses')}}" class="text-decoration-none">My Billing Address </a></li>
                 </ul>
             </div>
         </div>

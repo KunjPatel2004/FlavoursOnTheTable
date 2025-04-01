@@ -43,10 +43,9 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <h5 class="card-title">{{ $cook->name }}'s Kitchen</h5>
-                            <!-- <button class="btn btn-warning add-to-cart">Add to Cart</button> -->
                             <a href="{{route('cooks.menu',$cook->id)}}" style="color:#FBAF32"><span>View Menu</span></a>
                         </div>
-                    
+                        <h5 class="card-title"> {{ $cook->home_address }}</h5>
                     </div>                
                 </div>
             </div>

@@ -21,9 +21,10 @@
             <div class="card p-3 shadow-sm">
                 <h5>Hello, {{ Auth::user()->name }}</h5>
                 <ul class="list-unstyled mt-3">
-                    <li><a href="{{url('/customer/update_account')}}" class="text-decoration-none  {{ Session::get('page') == 'update_account' ? 'active text-success' : '' }}">My Billing/Contact Address</a></li>
+                    <li><a href="{{url('/customer/update_account')}}" class="text-decoration-none">My Contact Details</a></li>
                     <li><a href="{{url('/my-orders')}}" class="text-decoration-none">My Orders</a></li>
                     <li><a href="{{url('/customer/update_password')}}" class="text-decoration-none">Update Password</a></li>
+                    <li><a href="{{url('/customer/addresses')}}" class="text-decoration-none">My Billing Address </a></li>
                 </ul>
             </div>
         </div>
@@ -48,33 +49,7 @@
                             <input type="text" name="name" class="form-control" value="{{ Auth::user()->name }}">
                             <p id="account-name"></p>
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Address *</label>
-                            <input type="text" name="address" class="form-control" value="{{ Auth::user()->address }}">
-                            <p id="account-address"></p>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">City *</label>
-                            <input type="text" name="city" class="form-control" value="{{ Auth::user()->city }}">
-                            <p id="account-city"></p>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">State *</label>
-                            <input type="text" name="state" class="form-control" value="{{ Auth::user()->state }}">
-                            <p id="account-state"></p>
-                        </div>
-                        <!-- <div class="col-md-6 mb-3">
-                            <label class="form-label">Country *</label>
-                            <select name="country" class="form-control">
-                                <option>Choose Country</option>
-                                <option>India</option>
-                            </select>
-                        </div> -->
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Pincode *</label>
-                            <input type="text" name="pincode" class="form-control" value="{{ Auth::user()->pincode }}">
-                            <p id="account-pincode"></p>
-                        </div>
+            
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Mobile *</label>
                             <input type="text" name="mobile" class="form-control" value="{{ Auth::user()->mobile }}">
