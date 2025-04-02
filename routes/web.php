@@ -36,8 +36,7 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
     Route::get('/terms&conditions', [IndexController::class, 'Terms_Conditions']);
     Route::get('/help&support', [IndexController::class, 'Help_Support']);
     Route::get('/cookies', [IndexController::class, 'Cookies']);
-
-    
+    Route::get('/customer/delete-address/{id}', [AuthController::class, 'destroy']);
 
     Route::group(['middleware'=>['auth']],function(){
         Route::get('/customer/logout', 'AuthController@logout');
@@ -45,12 +44,12 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
         Route::match(['get','post'],'/customer/update_account',[AuthController::class,'CustomerAccount']);
         Route::match(['get','post'],'/customer/update_password',[AuthController::class,'UpdatePassword']);
 
-        Route::get('/customer/addresses', [AuthController::class, 'index'])->name('customer.addresses');
-        Route::get('/customer/add-address', [AuthController::class, 'create'])->name('customer.addAddress');
-        Route::post('/customer/store-address', [AuthController::class, 'store'])->name('customer.storeAddress');
-        Route::post('/customer/set-default-address/{id}', [AuthController::class, 'setDefaultAddress'])->name('customer.setDefaultAddress');
-    
-
+        Route::get('/customer/addresses', [AuthController::class, 'DisplayAddresses'])->name('customer.addresses');
+        Route::get('/customer/add-address', [AuthController::class, 'CreateAddress']);
+        Route::post('/customer/store-address', [AuthController::class, 'StoreAddress']);
+        Route::post('/customer/set-default-address/{id}', [AuthController::class, 'setDefaultAddress']);
+        Route::get('/customer/addresses/edit/{id}', [AuthController::class, 'editAddress']);
+        Route::post('/customer/addresses/update/{id}', [AuthController::class, 'updateAddress']);
     });
    
 });

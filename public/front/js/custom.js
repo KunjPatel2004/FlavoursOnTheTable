@@ -1,4 +1,14 @@
 $(document).ready(function (){
+ 
+  setTimeout(function() {
+    $("#success-alert").fadeOut("slow");
+  }, 3000); // 3000ms = 3 seconds
+
+  window.addEventListener("pageshow", function(event){
+    if(event.persisted){
+        location.reload();
+    }
+  });
 
     // Register Form Validation
     $("#registerForm").submit(function(){
@@ -137,12 +147,34 @@ $(document).ready(function (){
 
           $("#passwordForm")[0].reset();
           }
-          
-
+        
       },error:function(){
         alert("Error");
        }
     });
     });
+
+    $(document).on("click",".delete-address",function(){
+      var recordid = $(this).attr('recordid');
+     Swal.fire({
+      title:'Are you sure?',
+      text:"You won't be able to revert this!",
+      icon:'warning',
+      showCancelButton:true,
+      confirmButtonColor:'#3085d6',
+      cancelButtonColor:'#d33',
+      confirmButtonText:'Yes,  delete it!',
+     }).then((result) =>{
+      if(result.isConfirmed){
+          Swal.fire(
+              'Deleted!',
+              'Your address has been deleted.',
+              'success'
+          )
+          window.location.href='/customer/delete-address/' + recordid;
+       }
+      })                           
+    });
+
 
 });

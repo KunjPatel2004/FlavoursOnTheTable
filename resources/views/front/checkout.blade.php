@@ -59,15 +59,22 @@
 
     <h3>Total: ₹{{ number_format($totalPrice, 2) }}</h3>
 
-    @if(auth()->check())
-        <form action="{{ route('place.order') }}" method="POST">
-            @csrf
-            <button type="submit" class="btn btn-success">Place Order</button>
-        </form>
-    @else
-        <h4>Guest Checkout</h4>
-        <form action="{{ route('place.order') }}" method="POST">
-            @csrf
+    <form action="{{ route('place.order') }}" method="POST">
+        @csrf
+
+        @if(auth()->check())
+            <h4>Select Address</h4>
+            <div class="mb-3">
+                <label>Saved Addresses</label>
+                <select name="address" class="form-control">
+                    <option value="{{ $defaultAddress }}">{{ $defaultAddress }}</option>
+                    @foreach($otherAddresses as $address)
+                        <option value="{{ $address->address }}">{{ $address->address }}</option>
+                    @endforeach
+                </select>
+            </div>
+        @else
+            <h4>Guest Checkout</h4>
             <div class="mb-3">
                 <label>Name</label>
                 <input type="text" name="customer_name" class="form-control" required>
@@ -80,8 +87,17 @@
                 <label>Address</label>
                 <textarea name="address" class="form-control" required></textarea>
             </div>
-            <button type="submit" class="btn btn-success">Place Order</button>
-        </form>
-    @endif
+        @endif
+
+        <h4>Payment Method</h4>
+        <div class="mb-3">
+            <label>
+                <input type="radio" name="payment" value="COD" checked>
+                Cash on Delivery
+            </label>
+        </div>
+
+        <button type="submit" class="btn btn-success">Place Order</button>
+    </form>
 </div>
 @endsection

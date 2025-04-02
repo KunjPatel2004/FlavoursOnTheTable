@@ -1,4 +1,12 @@
 $(document).ready(function () {
+
+    window.addEventListener("pageshow", function(event){
+        if(event.persisted){
+            location.reload();
+        }
+    });
+
+
     $('.add-to-cart').click(function () {
         let food_id = $(this).data('id');
 

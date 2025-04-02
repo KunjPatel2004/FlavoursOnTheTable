@@ -15,35 +15,34 @@
 </div>
 
 <div class="container mt-5">
-    <h3>Add New Address</h3>
-    <form action="{{ route('customer.storeAddress') }}" method="POST">
-        @csrf
-        <div class="form-group">
-            <label for="address">Address</label>
-            <input type="text" name="address" class="form-control" required>
-        </div>
-
-        <div class="form-group">
-            <label for="city">City</label>
-            <input type="text" name="city" class="form-control" required>
-        </div>
-
-        <div class="form-group">
-            <label for="state">State</label>
-            <input type="text" name="state" class="form-control" required>
-        </div>
-
-        <div class="form-group">
-            <label for="country">Country</label>
-            <input type="text" name="country" class="form-control" required>
-        </div>
-
-        <div class="form-group">
-            <label for="pincode">Pincode</label>
-            <input type="text" name="pincode" class="form-control" required>
-        </div>
-
-        <button type="submit" class="btn btn-primary mt-3">Save Address</button>
-    </form>
+           
+    <div class="card p-4 shadow-sm">
+        <h3 class="mb-3">Edit Address</h3>
+        <form method="POST" action="{{ url('/customer/addresses/update/'.$address->id) }}">
+            @csrf
+            <div class="mb-3">
+                <label>Address</label>
+                <input type="text" name="address" class="form-control" value="{{ old('address', $address->address) }}">
+            </div>
+            <div class="mb-3">
+                <label>City</label>
+                <input type="text" name="city" class="form-control" value="{{ old('city', $address->city) }}">
+            </div>
+            <div class="mb-3">
+                <label>State</label>
+                <input type="text" name="state" class="form-control" value="{{ old('state', $address->state) }}">
+            </div>
+            <div class="mb-3">
+                <label>Country</label>
+                <input type="text" name="country" class="form-control" value="{{ old('country', $address->country) }}">
+            </div>
+            <div class="mb-3">
+                <label>Pincode</label>
+                <input type="text" name="pincode" class="form-control" value="{{ old('pincode', $address->pincode) }}">
+            </div>
+            <button type="submit" class="btn btn-primary">Update Address</button>
+            <a href="{{ url('/customer/addresses') }}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
 </div>
 @endsection

@@ -14,6 +14,15 @@
 </div>
 
 <div class="container mt-5">
+        @if(Session::has('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert" id="success-alert">
+                <strong>Success:</strong> {{ Session::get('success') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>    
+        @endif
+
     <div class="row">
         <div class="col-md-3">
             <div class="card p-3 shadow-sm">
@@ -32,12 +41,12 @@
                 <h3 class="mb-3">My Addresses</h3>
                 <p class="text-muted">Manage your billing/contact details below.</p>
 
-                <!-- If no address exists in the users table -->
+                
                 @if (empty($user->address))
                     <p class="text-danger">No address added yet.</p>
-                    <a href="{{ route('customer.addAddress') }}" class="btn btn-primary">Add Your Address</a>
+                    <a href="{{ url('/customer/add-address')  }}" class="btn btn-primary">Add Your Address</a>
                 @else
-                    <!-- Default Address from users table -->
+                    
                     <div class="list-group mb-3">
                         <div class="list-group-item">
                             <p><strong>Address:</strong> {{ $user->address }}</p>
@@ -46,10 +55,12 @@
                             <p><strong>Country:</strong> {{ $user->country }}</p>
                             <p><strong>Pincode:</strong> {{ $user->pincode }}</p>
                             <span class="badge bg-success">Default Address</span>
+                            &nbsp;
+                            <a class="btn btn-warning" href="{{ url('/customer/addresses/edit/'.$user->id) }}">Edit</a>
                         </div>
                     </div>
 
-                    <!-- Additional addresses from addresses table -->
+                    
                     <div class="list-group">
                         @foreach ($addresses as $address)
                         <div class="list-group-item">
@@ -58,18 +69,29 @@
                             <p><strong>State:</strong> {{ $address->state }}</p>
                             <p><strong>Country:</strong> {{ $address->country }}</p>
                             <p><strong>Pincode:</strong> {{ $address->pincode }}</p>
+                            
+                            <div class="d-flex">
+                                @if (!$address->is_default)
+                                    <form action="{{ url('/customer/set-default-address', $address->id) }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn btn-primary btn-sm me-2">Set as Default</button>
+                                    </form>
+                                @endif
 
-                            <form action="{{ route('customer.setDefaultAddress', $address->id) }}" method="POST">
-                                @csrf
-                                <button type="submit" class="btn btn-primary btn-sm">Set as Default</button>
-                            </form>
+                                <a class="btn btn-warning" href="{{ url('/customer/addresses/edit/'.$address->id) }}">Edit</a>
+                                &nbsp;
+                                &nbsp;
+                                <!-- Delete Address Button with SweetAlert -->
+                                <button class="btn btn-danger btn-sm delete-address" recordid="{{$address->id}}">
+                                    Delete</button>
+                            </div>
                         </div>
                         @endforeach
                     </div>
 
                     <!-- Add Another Address Button -->
                     @if ($addresses->count() < 2)
-                        <a href="{{ route('customer.addAddress') }}" class="btn btn-success mt-3">Add Another Address</a>
+                        <a href="{{ url('/customer/add-address') }}" class="btn btn-success mt-3">Add Another Address</a>
                     @endif
                 @endif
             </div>

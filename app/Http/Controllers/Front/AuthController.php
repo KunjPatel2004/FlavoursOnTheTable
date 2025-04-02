@@ -172,15 +172,15 @@ class AuthController extends Controller
         }
     }
 
-    public function index()
+    public function DisplayAddresses()
     {
         $user = Auth::user();
-        $addresses = $user->addresses; // Fetch addresses from the addresses table
+        $addresses = $user->addresses; 
 
         return view('front.customer.addresses', compact('user', 'addresses'));
     }
 
-    public function create()
+    public function CreateAddress()
     {
         $user = Auth::user();
 
@@ -191,9 +191,9 @@ class AuthController extends Controller
         return view('front.customer.add_address');
     }
 
-    public function store(Request $request)
+    public function StoreAddress(Request $request)
     {
-        $request->validate([
+       $rules= $request->validate([
             'address' => 'required|string',
             'city' => 'required|string',
             'state' => 'required|string',
@@ -204,7 +204,7 @@ class AuthController extends Controller
         $user = Auth::user();
 
         if (empty($user->address)) {
-            // If user has no address, store the first address in users table as default
+           
             $user->update([
                 'address' => $request->address,
                 'city' => $request->city,
@@ -215,7 +215,7 @@ class AuthController extends Controller
             return redirect()->route('customer.addresses')->with('success', 'Address added successfully!');
         }
 
-        // Otherwise, store it in the addresses table
+        
         if ($user->addresses->count() >= 2) {
             return redirect()->route('customer.addresses')->with('error', 'You can only add up to 2 additional addresses.');
         }
@@ -242,7 +242,6 @@ class AuthController extends Controller
             return redirect()->back()->with('error', 'Unauthorized action!');
         }
 
-        // Move previous default address (from `users` table) to `addresses` table
         Address::create([
             'user_id' => $user->id,
             'address' => $user->address,
@@ -269,5 +268,56 @@ class AuthController extends Controller
         $address->delete();
 
         return redirect()->route('customer.addresses')->with('success', 'Default address updated successfully!');
+    }
+
+    public function destroy($id)
+    {
+        $user = Auth::user();
+        $address = Address::findOrFail($id);
+
+        if ($address->user_id !== $user->id) {
+            return redirect()->back()->with('error', 'Unauthorized action!');
+        }
+
+        $address->delete();
+        return redirect()->route('customer.addresses')->with('success', 'Address deleted successfully!');
+    }
+
+    public function editAddress($id)
+    {
+        $user = Auth::user();
+
+        // If editing the default address (from users table)
+        if ($id == $user->id) {
+            return view('front.customer.add_address', ['address' => $user, 'is_default' => true]);
+        }
+
+        // If editing an additional address (from addresses table)
+        $address = Address::where('id', $id)->where('user_id', $user->id)->firstOrFail();
+        return view('front.customer.add_address', ['address' => $address, 'is_default' => false]);
+    }
+
+    public function updateAddress(Request $request, $id)
+    {
+        $request->validate([
+            'address' => 'required|string',
+            'city' => 'required|string',
+            'state' => 'required|string',
+            'country' => 'required|string',
+            'pincode' => 'required|string',
+        ]);
+
+        $user = Auth::user();
+
+        // If updating the default address
+        if ($id == $user->id) {
+            $user->update($request->only(['address', 'city', 'state', 'country', 'pincode']));
+        } else {
+            // Update additional address
+            $address = Address::where('id', $id)->where('user_id', $user->id)->firstOrFail();
+            $address->update($request->only(['address', 'city', 'state', 'country', 'pincode']));
+        }
+
+        return redirect('/customer/addresses')->with('success', 'Address updated successfully!');
     }
 }

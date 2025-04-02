@@ -4,11 +4,10 @@
 <!-- Page Header Start -->
 <div class="page-header mb-0">
             <div class="container">
-                <div class="row">
-                    
+                <div class="row"> 
                     <div class="col-12">
                         <a href="{{url('/')}}">Home</a>
-                        <a href="{{url('/customer/account')}}">My Account</a>
+                        <a href="{{url('/my-orders')}}">My Orders</a>
                     </div>
                 </div>
             </div>
@@ -23,17 +22,17 @@
         </div>
     @else
         @foreach ($orders as $order)
-            <div class="card mb-4 shadow-sm">
+             <div class="card mb-4 shadow-sm">
                 <div class="card-body">
-                    <h5 class="card-title">Order #{{ $order->id }}</h5>
-                    <p class="mb-1"><strong>Order Date:</strong> {{ $order->created_at->format('d M Y, h:i A') }}</p>
+                    <h5 class="card-title">Order #{{ $order->id }}</h5>   
+                    <p class="mb-1"><strong>Order Date:</strong> {{ date("F j, Y, g:i a", strtotime($order->created_at)) }}</p>
                     <p class="mb-1"><strong>Status:</strong> 
                         <span class="badge 
                             @if($order->status == 'Order Placed') badge-primary 
                             @elseif($order->status == 'Pending') badge-warning 
                             @elseif($order->status == 'Preparing') badge-info 
-                            @elseif($order->status == 'Ready') badge-success 
-                            @elseif($order->status == 'Delivered') badge-dark 
+                            @elseif($order->status == 'Ready') badge-dark 
+                            @elseif($order->status == 'Delivered') badge-success 
                             @endif">
                             {{ $order->status }}
                         </span>
