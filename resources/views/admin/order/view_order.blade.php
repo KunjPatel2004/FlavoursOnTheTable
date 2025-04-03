@@ -58,15 +58,23 @@
                     value="{{$orderpage['customer_name']}}" >
                   </div>
                   <div class="form-group col-md-6">
-                    <label for="cook_name">Cook Name</label>
+                    <label for="cook_name">Mobile</label>
                     <input type="text" class="form-control" id="cook_name" name="cook_name"
-                    value="{{$orderpage['cook_name']}}" >
+                    value="{{$orderpage['mobile']}}" >
+                  </div>
+
+                  <div class="form-group col-md-6">
+                    <label for="address_2">Address</label>
+                    <input type="text" class="form-control" id="address_2" name="address_2" 
+                     value="{{$orderpage['address']}}" >
                   </div>
         
                   <div class="form-group col-md-6">
                     <label for="totalfooditems">Total Food Items</label>
                     <input type="text" class="form-control" id="totalfooditems" name="totalfooditems"
-                    value="{{$orderpage['totalfooditems']}}" >
+                    @foreach($orderpage->orderItems as $item)
+                                     value="{{ $item->foodItem->name }} (x{{ $item->quantity }})" <br>
+                                    @endforeach 
                   </div>
                   <div class="form-group col-md-6">
                     <label for="total_price">Total Price</label>

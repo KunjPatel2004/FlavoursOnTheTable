@@ -33,7 +33,6 @@
         <div class="col-md-5">
             <div class="card shadow-lg p-4">
                 <div class="text-center mb-3">
-                    <h1 class="text fw-bold" style="color:#fbaf32">Flavors On The Table</h1>
                     <h2 class="text-dark">Welcome Back!</h2>
                     <p class="text-muted">Signin to continue</p>
                 </div>
@@ -62,7 +61,7 @@
                             @if(isset($_COOKIE["user-email"])) checked="" @endif>
                             <label class="form-check-label" for="remember-me">Remember me</label>
                         </div>
-                        <a href="#" class="text text-decoration-none" style="color:#fbaf32">Forgot password?</a>
+                        <!-- <a href="#" class="text text-decoration-none" style="color:#fbaf32">Forgot password?</a> -->
                     </div>
 
                     <button type="submit" class="btn w-100" style="background-color:#fbaf32">Sign in</button>

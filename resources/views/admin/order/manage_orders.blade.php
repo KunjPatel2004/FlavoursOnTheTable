@@ -8,11 +8,10 @@
                 <div class="col-sm-6">
                     <h1 class="m-0">Order Management</h1>
                 </div>
-                
             </div>
         </div>
     </div>
-   <!-- Main content -->
+   
    <section class="content">
     <div class="container-fluid">
         <div class="row">
@@ -61,22 +60,21 @@
                                 </td>
                                 <td>₹{{ number_format($order->total_price, 2) }}</td>
                                 <td>{{ date("F j, Y, g:i a", strtotime($order->created_at)) }}</td>
+
+                                <td>Status: {{ $order->status }}</td>
+                                
                                 <td>
-                                <select class="status-dropdown" data-id="{{ $order->id }}">
+                                <select class="order-status" data-order-id="{{ $order->id }}" >
                                     <option value="order placed" {{ $order->status == 'order placed' ? 'selected' : '' }}>Order Placed</option>
                                     <option value="pending" {{ $order->status == 'pending' ? 'selected' : '' }}>Pending</option>
                                     <option value="preparing" {{ $order->status == 'preparing' ? 'selected' : '' }}>Preparing</option>
                                     <option value="ready" {{ $order->status == 'ready' ? 'selected' : '' }}>Ready</option>
                                     <option value="delivered" {{ $order->status == 'delivered' ? 'selected' : '' }}>Delivered</option>
                                 </select>
-                                
-                                </td>
-                                <td>
                                     <a style="color:#3f6ed3" class="confirmDelete" name="order" title="Delete order"
                                         href="javascript:void(0)" record="order" recordid="{{ $order->id }}">
                                         <i class="fas fa-trash"></i>
                                     </a>
-
                                     &nbsp; &nbsp; 
                                     <a href="{{ url('admin/view-order-details/'.$order->id) }}" style="color:#3f6ed3">
                                         View details
@@ -87,17 +85,10 @@
                         </tbody>
                     </table>
                 </div>
-                <!-- /.card-body -->
             </div>
-            <!-- /.card -->
         </div>
-        <!-- /.col -->
         </div>
-        <!-- /.row -->
     </div>
-    <!-- /.container-fluid -->
     </section>
-    <!-- /.content -->
 </div>
-<!-- /.content-wrapper -->
 @endsection

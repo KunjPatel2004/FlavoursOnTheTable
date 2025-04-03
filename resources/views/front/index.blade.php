@@ -27,7 +27,7 @@
                                Delicious meals, delivered fresh!
                                </p>
                                <div class="carousel-btn">
-                                   <a class="btn custom-btn" href="{{url('/menu')}}">Explore Menu</a>
+                                   <a class="btn custom-btn" href="{{url('/available_cooks')}}">Explore Menu</a>
                                </div>
                            </div>
                        </div>
@@ -79,7 +79,7 @@
                         <p>
                             Experience the best home-cooked meals made with fresh ingredients, prepared by skilled cooks, and delivered straight to your doorstep.
                         </p>
-                        <a class="btn custom-btn" href="#">Order Now</a>
+                        <a class="btn custom-btn" href="{{url('/available_cooks')}}">Order Now</a>
                     </div>
                 </div>
                 <div class="col-lg-7">

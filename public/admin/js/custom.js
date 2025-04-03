@@ -75,36 +75,31 @@ $(document).ready(function(){
     });
 
    
-    $(".status-dropdown").change(function() {
-        let orderId = $(this).data("id");
-        let newStatus = $(this).val();
-        let dropdown = $(this);
-
+    
+    $(document).on('change', '.order-status', function () {
+        var orderId = $(this).data('order-id');
+        var newStatus = $(this).val();
+    
         $.ajax({
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             type:'post',
-            url: "/admin/update-order-status",
+            url: 'update-order-status',
             data: {
                 order_id: orderId,
-                status: newStatus
+                status: newStatus,
             },
-            success: function (response) {
+            success: function(response) {
                 if (response.success) {
-                    alert("Order status updated successfully!");
-                    
-                 
-                    dropdown.val(response.updated_status);
-
+                    alert("Status updated to " + response.new_status); 
+                    location.reload();
                 } else {
-                    alert("Failed to update status.");
+                    alert("Failed to update status");
                 }
             },
-            error: function () {
-                alert("Something went wrong!");
+            error: function(xhr, status, error) {
+                console.error("AJAX Error: ", xhr.responseText);
             }
         });
-
     });
     
-   
 });

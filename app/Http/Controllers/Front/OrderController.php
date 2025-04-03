@@ -29,7 +29,7 @@ class OrderController extends Controller
         })->get();
 
         if ($cartItems->isEmpty()) {
-            return redirect()->route('cart')->with('error message', 'Your cart is empty.');
+            return redirect()->route('cart')->with('error', 'Your cart is empty.');
         }
 
         $totalPrice = $cartItems->sum('subtotal');
@@ -98,7 +98,7 @@ class OrderController extends Controller
             }
         })->delete();
 
-        return redirect()->route('cart')->with('success message', 'Order placed successfully.');
+        return redirect()->route('cart')->with('success', 'Order placed successfully.');
     }
 
     public function myOrders()

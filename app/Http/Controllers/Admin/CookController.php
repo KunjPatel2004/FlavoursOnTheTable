@@ -85,16 +85,17 @@ class CookController extends Controller
    
     public function Manage_Orders(){
         Session::put('page','manage_orders');
+        
          $user = auth('admin')->user(); // Get the logged-in user
 
         if ($user->role === 'admin') {
             
             $manageorder = Order::with('orderItems.foodItem', 'customer')->get();
         } elseif ($user->role === 'cook') {
-            // Cook sees only orders containing their food items
+            
             $manageorder = Order::whereHas('orderItems.foodItem', function ($query) use ($user) {
                 $query->where('cook_id', $user->id);
-            })->with('orderItems.foodItem')->get();
+            })->with('orderItems.foodItem')->latest()->get();
         } else {
             return abort(403, 'Unauthorized action.');
         }
@@ -104,7 +105,10 @@ class CookController extends Controller
 
     public function view_order(Request $request,$id=null){
         Session::put('page','manage_orders');
-       
+        $title = "View Order Details"; // Set the page title
+        
+       // Fetch order details from the database
+       $orderpage = Order::where('id', $id)->first();
         return view('admin.order.view_order')->with(compact('title','orderpage'));
     }
 
@@ -113,27 +117,29 @@ class CookController extends Controller
         return redirect()->back()->with('success message','Order deleted successfully!');
     }
 
-    public function updateorderstatus(Request $request){
+    public function updateStatus(Request $request)
+    {
+        $order = Order::find($request->order_id);
 
-        if ($request->ajax()) {
-            $order = Order::find($request->order_id);
-    
-            if ($order) {
-                $order->status = $request->status;
-                $order->save();
-    
-                return response()->json([
-                    'success' => true, 
-                    'message' => 'Order status updated successfully!',
-                    'updated_status' => $order->status // Send back updated status
-                ]);
-            } else {
-                return response()->json([
-                    'success' => false, 
-                    'message' => 'Order not found!'
-                ]);
-            }
+        if ($order) {
+            $order->status = $request->status;
+            $order->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Status updated successfully',
+                'new_status' => $order->status
+            ]);
         }
-      
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Order not found'
+        ]);
     }
+
+    
+
+
+    
 }

@@ -88,7 +88,8 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::match(['get','post'],'manage_order','CookController@Manage_Orders');
         Route::get("delete-orderdetail/{id?}",'CookController@delete_order');
         Route::match(['get','post'],"view-order-details/{id?}",'CookController@view_order');
-        Route::post('update-order-status','CookController@updateorderstatus');
+        Route::post('update-order-status', 'CookController@updateStatus')->name('update_order_status');
+
        
         
      });

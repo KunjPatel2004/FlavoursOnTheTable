@@ -6,6 +6,13 @@ $(document).ready(function () {
         }
     });
 
+    setTimeout(function() {
+        $("#success-alert").fadeOut("slow");
+      }, 4000); 
+
+    setTimeout(function() {
+       $("#error-alert").fadeOut("slow"); 
+    }, 4000);
 
     $('.add-to-cart').click(function () {
         let food_id = $(this).data('id');
