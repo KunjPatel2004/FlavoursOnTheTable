@@ -39,20 +39,20 @@
        <tbody>
             @foreach($Fooditem as $page)
           <tr>
-            <td>{{$page['id']}}</td>
-            <td>{{$page['cook_id']}}</td>
-            <td>{{$page['name']}}</td>
-            <td><img style="width:80px; margin:10px;"src="{{asset('admin/images/fooditems/'.$page['image'])}}"></td>
-            <td>{{$page['description']}}</td>
-            <td>{{$page['price']}}</td>
-            <td>{{$page['status']}}</td>
+            <td>{{$page->id}}</td>
+            <td>{{$page->cook_id}}</td>
+            <td>{{$page->name}}</td>
+            <td><img style="width:80px; margin:10px;"src="{{asset('admin/images/fooditems/'.$page->image)}}"></td>
+            <td>{{$page->description}}</td>
+            <td>{{$page->price}}</td>
+            <td>{{$page->status}}</td>
             <td>
-              <a class="btn btn-info btn-sm" href="{{url('admin/add-edit-food-item/'.$page['id'])}}" style="color:white">
+              <a class="btn btn-info btn-sm" href="{{url('admin/add-edit-food-item/'.$page->id)}}" style="color:white">
                 <i class="fas fa-pencil-alt"></i>Edit</a>
                 &nbsp; &nbsp;
               <a style="color:#3f6ed3" class="confirmDelete" name="fooditem" title="delete food Item"
-                href="javascript:void(0)" record="fooditem" recordid="{{$page['id']}}">
-              <i class="fas fa-trash "></i>&nbsp; Delete</a>
+                href="javascript:void(0)" record="fooditem" recordid="{{$page->id}}">
+              <i class="fas fa-trash "></i></a>
             </td>
           </tr>
             @endforeach

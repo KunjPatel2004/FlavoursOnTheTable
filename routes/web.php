@@ -18,6 +18,8 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
    
     Route::match(['get', 'post'], '/customer/register', 'AuthController@register');
     
+    Route::match(['get', 'post'], '/cook/register', 'AuthController@CookRegister');
+    
     Route::match(['get', 'post'],'/available_cooks',[IndexController::class,'AvailableCooks']);
     Route::get('/cooks/{cook_id}/menu', [IndexController::class, 'Menu'])->name('cooks.menu');
 
@@ -37,6 +39,8 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
     Route::get('/help&support', [IndexController::class, 'Help_Support']);
     Route::get('/cookies', [IndexController::class, 'Cookies']);
     Route::get('/customer/delete-address/{id}', [AuthController::class, 'destroy']);
+    Route::get('/about', [IndexController::class, 'About']);
+
 
     Route::group(['middleware'=>['auth']],function(){
         Route::get('/customer/logout', 'AuthController@logout');
@@ -79,7 +83,7 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
 
 
         //Cook Details
-        Route::match(['get','post'],'food_items','CookController@Food_items');
+        Route::match(['get','post'],'{id}/food-items','CookController@Food_items')->name('admin.fooditems');
         Route::match(['get','post'],"add-edit-food-item/{id?}",'CookController@Add_edit_fooditem');
         Route::get("delete-fooditem/{id?}",'CookController@delete_fooditem');
         Route::match(['get','post'],'cook-details','AdminController@CookDetails');

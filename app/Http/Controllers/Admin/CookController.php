@@ -13,10 +13,11 @@ use Image;
 
 class CookController extends Controller
 {
-    public function Food_items() {
+    public function Food_items($id) {
         Session::put('page','food_item');
-         $Fooditem = FoodItem::get()->toArray();
-        return view('admin.cook.food_items')->with(compact('Fooditem'));
+         $cook = Admin::where('id', $id)->where('role', 'cook')->firstOrFail();  
+         $Fooditem = FoodItem::where('cook_id',$id)->get();
+        return view('admin.cook.food_items')->with(compact('Fooditem','cook'));
     }
 
    
@@ -73,7 +74,7 @@ class CookController extends Controller
             $fooditempage->image = $imageName;
             $fooditempage->status = $data['status'];
             $fooditempage->save();
-            return redirect('admin/food_items')->with('success message',$message);
+            return redirect()->route('admin.fooditems', $fooditempage->cook_id)->with('success message',$message);
         }
         return view('admin.cook.add_edit_fooditems')->with(compact('title','fooditempage'));
     }

@@ -118,12 +118,23 @@
                 @else
                     @php $active="" @endphp
                 @endif
+
+                @if(auth()->guard('admin')->user()->role == 'cook')
                 <li class="nav-item">
-                    <a href="{{url('admin/food_items')}}" class="nav-link {{$active}}">
+                    <a href="{{ url('admin/'.auth()->guard('admin')->user()->id.'/food-items') }}" class="nav-link {{$active}}">
+                        <i class="nav-icon fas fa-edit"></i>
+                        <p>My Food Items</p>
+                    </a>
+                </li>
+            @else
+                <li class="nav-item">
+                    <a href="{{ url('admin/food_items') }}" class="nav-link {{$active}}">
                         <i class="nav-icon fas fa-edit"></i>
                         <p>Food Items</p>
                     </a>
                 </li>
+            @endif
+
 
             </ul>
         </nav>

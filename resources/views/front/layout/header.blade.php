@@ -8,9 +8,9 @@
 
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto">
-                <a href="{{ url('/') }}" class="nav-item nav-link {{ Session::get('page') == 'home' ? 'active text-warning' : '' }}">Home</a>
-                <a href="{{ url('/about') }}" class="nav-item nav-link">About</a>
-                <a href="{{ url('/available_cooks') }}" class="nav-item nav-link {{ Session::get('page') == 'menu' ? 'active text-warning' : '' }}">Menu</a>
+                <a href="{{ url('/') }}" class="nav-item nav-link {{ request()->is('/') ? 'active' : '' }}">Home</a>
+                <a href="{{ url('/about') }}" class="nav-item nav-link {{ request()->is('about') ? 'active' : '' }}">About</a>
+                <a href="{{ url('/available_cooks') }}" class="nav-item nav-link {{ request()->is('available_cooks') ? 'active' : '' }}">Menu</a>
                 <a href="#" class="nav-link d-flex align-items-center"
                  id="accountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fas fa-user-circle me-1"></i>@if(Auth::check()){{Auth::user()->name}} @endif

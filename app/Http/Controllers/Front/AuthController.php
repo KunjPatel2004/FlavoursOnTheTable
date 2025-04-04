@@ -14,18 +14,60 @@ use Hash;
 
 class AuthController extends Controller
 {
-   // Customer Login
+    public function CookRegister(Request $request){
+        
+        if ($request->ajax()) {
+ 
+            $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:150',
+            'email' => 'required|email|max:250|unique:admins,email|lowercase|regex:/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/',
+            'food_category' => 'required|in:veg,non-veg,both',
+            'mobile' => 'required|numeric|digits:10|unique:admins,mobile',
+            'password' => 'required|string|min:6',
+        ], [
+             'mobile.unique' => 'This mobile number is already registered.',
+             'email.unique' => 'This email is already registered.',
+            'email.email' => 'Please enter a valid email',
+        ]);
+
+            if($validator->passes()){
+                $data = $request->all();
+                $cook = new Admin();
+                $cook->name = $data['name'];
+                $cook->food_category = $data['food_category'];
+                $cook->mobile = $data['mobile'];
+                $cook->email = $data['email'];
+                $cook->password = bcrypt($data['password']);
+                $cook->status = 1;
+                $cook->save();
+
+                if(Auth::guard('admin')->attempt(['email'=>$data['email'], 'password'=>$data['password']])){
+                    $redirectUrl = url('/admin/login?success= Registration successful! You can login now.');
+                    return response()->json(['status' => true, 'type' => 'success', 'redirectUrl' => $redirectUrl]);
+                    
+                }
+
+            }else{
+                return response()->json(['status'=>false,'type'=>'validation',
+                'errors'=>$validator->messages()]);
+            }
+        }
+        return view('front.register_cook');
+    }
+
+
+ 
    public function login(Request $request)
    {
        if ($request->ajax()) {
           $data = $request->all();
 
           $validator = Validator::make($request->all(),[
-            'email' => 'required|email|max:250|exists:users|lowercase|regex:/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/',
+            'email' => 'required|email|max:250|exists:users,email|regex:/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,10}$/i',
             'password' => 'required|min:6',
         ],
         [
-            'email.exists'=> 'Email does not exists',
+            'email.exists' => 'Email does not exist in our records.',
         ]);
 
         if($validator->passes()){
@@ -62,10 +104,12 @@ class AuthController extends Controller
  
             $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:150',
-            'email' => 'required|email|max:250|unique:users|lowercase|regex:/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/',
-            'mobile' => 'required|numeric|digits:10',
+            'email' => 'required|email|max:250|unique:users,email|lowercase|regex:/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/',
+            'mobile' => 'required|numeric|digits:10|unique:users,mobile',
             'password' => 'required|string|min:6',
         ], [
+            'mobile.unique' => 'This mobile number is already registered.',
+            'email.unique' => 'This email is already registered.',
             'email.email' => 'Please enter a valid email',
         ]);
 

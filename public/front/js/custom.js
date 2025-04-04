@@ -10,10 +10,10 @@ $(document).ready(function (){
     }
   });
 
-    // Register Form Validation
+  
     $("#registerForm").submit(function(){
       var formData = $("#registerForm").serialize();
-    //   alert(formData); return false;
+
     $.ajax({
        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
        url:'/customer/register',
@@ -177,4 +177,32 @@ $(document).ready(function (){
     });
 
 
+    $("#cookForm").submit(function(){
+      var formData = $("#cookForm").serialize();
+
+    $.ajax({
+       headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+       url:'/cook/register',
+       type:'post',
+       data: formData,
+       success:function(data){
+         if(data.type=="validation"){
+            $.each(data.errors, function (i,error){
+                $('#cook-'+i).attr('style','color:red');
+                $('#cook-'+i).html(error);
+                setTimeout(function(){
+                    $('#cook-'+i).css({
+                        'display':'none'
+                    })
+                }, 5000);
+            });
+          }else if(data.type=="success"){
+            window.location.href = data.redirectUrl; 
+
+          }
+       },error:function(){
+        alert("Error");
+       }
+    });
+    });
 });

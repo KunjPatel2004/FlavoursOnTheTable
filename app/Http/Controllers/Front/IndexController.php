@@ -18,6 +18,10 @@ class IndexController extends Controller
         return view('front.index',compact('cooks','popularDishes'));
     }
 
+    public function About(){
+        return view('front.about');
+    }
+
     public function AvailableCooks(){
        Session::put('page','menu');
        $foods =FoodItem::all();

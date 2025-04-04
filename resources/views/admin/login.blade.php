@@ -23,6 +23,14 @@
     </div>
     <div class="card-body">
       <p class="login-box-msg">Sign in to start your session</p>
+          @if(request()->has('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Success:</strong> {{ request()->get('success')  }}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button> 
+            </div>
+          @endif
              @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
@@ -33,22 +41,21 @@
              </div>
            @endif
 
-           @if(Session::has('success message'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>Success:</strong>{{ Session::get('success message') }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            </div>
+           @if(Session::has('success_message'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Success:</strong> {{ Session::get('success_message') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
             @endif
 
+           
         @if(Session::has('error message'))
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-         <strong>Error:</strong>{{ Session::get('error message') }}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <strong>Error:</strong>{{ Session::get('error message') }}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+         </div>
     @endif
       <form action="{{url('admin/login')}}" method="post">@csrf
         <div class="input-group mb-3">
