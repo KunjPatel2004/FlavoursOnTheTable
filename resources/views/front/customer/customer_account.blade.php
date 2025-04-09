@@ -32,8 +32,8 @@
         <!-- Account Details Form -->
         <div class="col-md-9">
             <div class="card p-4 shadow-sm">
-                <h3 class="mb-3">My Billing/Contact Address</h3>
-                <p class="text-muted">Please add your Billing/Contact details.</p>
+                <h3 class="mb-3">Contact Details</h3>
+                <p class="text-muted">Please add your Contact details.</p>
                 <p id="account-error"></p>
                 <p id="account-success"></p>
                 <form id="accountForm" action="javascript:;" method="POST">@csrf

@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->nullable(); // Nullable for guest users
-            $table->string('session_id')->nullable(); // Unique session identifier for guests
+            $table->unsignedBigInteger('user_id')->nullable(); 
+            $table->string('session_id')->nullable(); 
             $table->unsignedBigInteger('food_id');
             $table->string('food_name');
             $table->decimal('price', 8, 2);

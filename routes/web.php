@@ -90,7 +90,7 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::match(['get','post'],"add-edit-cook-details/{id?}",'AdminController@add_edit_cookdetails');
         Route::get("delete-cook-detail/{id?}",'AdminController@delete_cook');
         Route::match(['get','post'],'manage_order','CookController@Manage_Orders');
-        Route::get("delete-orderdetail/{id?}",'CookController@delete_order');
+        Route::get("delete-order/{id?}",'CookController@delete_order');
         Route::match(['get','post'],"view-order-details/{id?}",'CookController@view_order');
         Route::post('update-order-status', 'CookController@updateStatus')->name('update_order_status');
 

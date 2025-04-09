@@ -22,34 +22,6 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 
-                @if(auth()->guard('admin')->check() && auth()->guard('admin')->user()->role == 'admin')
-                    <!-- Manage Cooks -->
-                    @if(Session::get('page')=="cook_details")
-                        @php $active = "active" @endphp
-                    @else
-                        @php $active="" @endphp
-                    @endif
-                    <li class="nav-item">
-                        <a href="{{url('admin/cook-details')}}" class="nav-link {{$active}}">
-                            <i class="nav-icon fas fa-edit"></i>
-                            <p>Manage Cooks</p>
-                        </a>
-                    </li>
-
-                    <!-- Manage Customers -->
-                    @if(Session::get('page')=="customer_details")
-                        @php $active = "active" @endphp
-                    @else
-                        @php $active="" @endphp
-                    @endif
-                    <li class="nav-item">
-                        <a href="{{url('admin/customer-details')}}" class="nav-link {{$active}}">
-                            <i class="nav-icon fas fa-edit"></i>
-                            <p>Manage Customers</p>
-                        </a>
-                    </li>
-                @endif
-
                 @if(Session::get('page')=="dashboard")
                     @php $active = "active" @endphp
                 @else
@@ -84,7 +56,7 @@
                         <li class="nav-item">
                             <a href="{{url('admin/update_password')}}" class="nav-link {{$active}}">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Update Admin Password</p>
+                                <p>Update Password</p>
                             </a>
                         </li>
                         @if(Session::get('page')=="update_details")
@@ -95,11 +67,39 @@
                         <li class="nav-item">
                             <a href="{{url('admin/update-details')}}" class="nav-link {{$active}}">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Update Admin Details</p>
+                                <p>Update Details</p>
                             </a>
                         </li>
                     </ul>
                 </li>
+
+                @if(auth()->guard('admin')->check() && auth()->guard('admin')->user()->role == 'admin')
+                    <!-- Manage Cooks -->
+                    @if(Session::get('page')=="cook_details")
+                        @php $active = "active" @endphp
+                    @else
+                        @php $active="" @endphp
+                    @endif
+                    <li class="nav-item">
+                        <a href="{{url('admin/cook-details')}}" class="nav-link {{$active}}">
+                            <i class="nav-icon fas fa-edit"></i>
+                            <p>Manage Cooks</p>
+                        </a>
+                    </li>
+
+                    <!-- Manage Customers -->
+                    @if(Session::get('page')=="customer_details")
+                        @php $active = "active" @endphp
+                    @else
+                        @php $active="" @endphp
+                    @endif
+                    <li class="nav-item">
+                        <a href="{{url('admin/customer-details')}}" class="nav-link {{$active}}">
+                            <i class="nav-icon fas fa-edit"></i>
+                            <p>Manage Customers</p>
+                        </a>
+                    </li>
+                @endif
 
                 @if(Session::get('page')=="manage_orders")
                     @php $active = "active" @endphp
@@ -126,9 +126,9 @@
                         <p>My Food Items</p>
                     </a>
                 </li>
-            @else
+            @elseif(auth()->guard('admin')->user()->role == 'admin')
                 <li class="nav-item">
-                    <a href="{{ url('admin/food_items') }}" class="nav-link {{$active}}">
+                    <a href="{{ url('admin/'.auth()->guard('admin')->user()->id.'/food-items') }}" class="nav-link {{$active}}">
                         <i class="nav-icon fas fa-edit"></i>
                         <p>Food Items</p>
                     </a>

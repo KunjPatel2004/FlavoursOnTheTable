@@ -15,9 +15,16 @@ class CookController extends Controller
 {
     public function Food_items($id) {
         Session::put('page','food_item');
+        $authuser = auth('admin')->user();
+
+        if($authuser->role== 'admin'){
+            $Fooditem = FoodItem::all(); 
+        }
+        else{
          $cook = Admin::where('id', $id)->where('role', 'cook')->firstOrFail();  
          $Fooditem = FoodItem::where('cook_id',$id)->get();
-        return view('admin.cook.food_items')->with(compact('Fooditem','cook'));
+        }
+        return view('admin.cook.food_items')->with(compact('Fooditem'));
     }
 
    
