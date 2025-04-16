@@ -42,7 +42,7 @@
             </div>
             <button type="submit" class="btn btn-primary">Update Address</button>
             <a href="{{ url('/customer/addresses') }}" class="btn btn-secondary">Cancel</a>
-        </form>
+        </form> 
     </div>
 </div>
 @endsection

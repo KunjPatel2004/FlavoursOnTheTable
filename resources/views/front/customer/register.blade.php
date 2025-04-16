@@ -9,11 +9,11 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12">
-                        <h2>Food Menu</h2>
+                        <h2>Register</h2>
                     </div>
                     <div class="col-12">
                         <a href="{{url('/')}}">Home</a>
-                        <a href="{{url('/available_cooks')}}">Menu</a>
+                        <a href="{{url('/customer/register')}}">Register</a>
                     </div>
                 </div>
             </div>

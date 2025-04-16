@@ -97,7 +97,7 @@ class AdminController extends Controller
 
            //Update Admin Details
            Admin::where('email',Auth::guard('admin')->user()->email)->update(
-            ['name'=>$data['admin_name'],'mobile'=>$data['admin_mobile'],'image'=>$imageName]);
+            ['name'=>$data['admin_name'],'mobile'=>$data['admin_mobile'],'image'=>$imageName,'home_address'=>$data['admin_address']]);
 
             return redirect()->back()->with('success message',
             'Admin details has been updated successfully');

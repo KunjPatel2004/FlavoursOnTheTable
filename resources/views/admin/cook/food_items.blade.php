@@ -27,7 +27,6 @@
         <thead>
           <tr>
             <th>ID</th>
-            <th>Cook ID</th>
             <th>Food Name</th>
             <th>Image</th>
             <th>Description</th>
@@ -40,7 +39,6 @@
             @foreach($Fooditem as $page)
           <tr>
             <td>{{$page->id}}</td>
-            <td>{{$page->cook_id}}</td>
             <td>{{$page->name}}</td>
             <td><img style="width:80px; margin:10px;"src="{{asset('admin/images/fooditems/'.$page->image)}}"></td>
             <td>{{$page->description}}</td>

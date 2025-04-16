@@ -51,9 +51,9 @@
                 </div>
 
                 <!-- Cart Icon with Badge -->
-                <a href="{{ route('cart') }}" class="nav-item nav-link position-relative">
+                <a href="{{ route('cart') }}" class="nav-item nav-link position-relative {{ request()->is('cart') ? 'active' : '' }}">
                     <i class="fas fa-shopping-bag"></i>
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
+                    View Cart
                 </a>
             </div>
         </div>

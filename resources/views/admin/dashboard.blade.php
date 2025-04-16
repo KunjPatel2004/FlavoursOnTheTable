@@ -35,7 +35,7 @@
               <a href="{{url('admin/manage_order')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
-          
+          @if(auth()->guard('admin')->check() && auth()->guard('admin')->user()->role == 'admin')
           <div class="col-lg-4 col-6">
             <!-- small box -->
             <div class="small-box bg-success">
@@ -49,6 +49,7 @@
               <a href="{{url('admin/cook-details')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
+          @endif
           <!-- ./col -->
           <div class="col-lg-4 col-6">
             <!-- small box -->

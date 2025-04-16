@@ -23,72 +23,46 @@
     <div class="card-body">
       <p class="login-box-msg">Register a new account</p>
 
-      <form action="{{url('admin/registration/'.$register['$id'])}}" method="post">
-      <div class="input-group mb-3">
-        <select class="form-control">
-          <option>Select a role</option>
-           <option>Customer</option>
-           <option>Cook</option>
-        </select>
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-user"></span>
-            </div>
-          </div>
+      <form id="cookForm" action="javascript:;" method="POST">
+      @csrf
+      <div class="mb-3">
+          <input type="text" id="name" name="name" class="form-control" placeholder="Enter Name">
+          <p id="cook-name"></p>
       </div>
-      <div class="input-group mb-3">
-          <input type="text" class="form-control" placeholder="Full name" name="name" id="name">
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-user"></span>
-            </div>
-          </div>
-      </div>
-        <div class="input-group mb-3">
-          <input type="email" class="form-control" placeholder="Email" name="email" id="email">
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-envelope"></span>
-            </div>
-          </div>
-        </div>
 
-        <div class="input-group mb-3">
-          <input type="mobile" class="form-control" placeholder="Mobile Number" name="mobile" id="mobile">
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-envelope"></span>
-            </div>
-          </div>
-        </div>
-        <div class="input-group mb-3">
-          <input type="password" class="form-control" placeholder="Password" name="password" id="password">
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-lock"></span>
-            </div>
-          </div>
-        </div>
-        <div class="input-group mb-3">
-          <input type="password" class="form-control" placeholder="Retype password" name="retypepassword" id="retypepassword">
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-lock"></span>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <!-- /.col -->
-          <div class="col-4">
-          <button type="submit" class="btn btn-primary btn-block">Register</button>
-          </div>  
-          <!-- /.col -->
-        </div>
+      
+      <div class="mb-3">
+          <select name="food_category"  id="food_category" name="food_category" class="form-control" >
+              <option value="">Select Category</option>
+              <option value="veg" >Veg</option>
+              <option value="non-veg">Non-Veg</option>
+              <option value="both">Both</option>
+          </select>   
+      </div>
+      <div class="mb-3">
+          <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email">
+          <p id="cook-email"></p>
+      </div>
+
+      <div class="mb-3">
+          <input type="text" id="mobile" name="mobile" class="form-control" placeholder="Mobile Number">
+          <p id="cook-mobile"></p>
+      </div>
+
+      <div class="mb-3">
+          <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password">
+          <p id="cook-password"></p>
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100">Sign up</button>
       </form>
 
-     
+      <div class="text-center mt-3">
+          <p class="text-muted">Already have an account? 
+              <a href="{{ url('/admin/login') }}" class="text text-decoration-none fw-bold">Login</a>
+          </p>
+      </div>
 
-      <a href="{{url('admin/login')}}" class="text-center">I already have an account</a>
     </div>
     <!-- /.form-box -->
   </div><!-- /.card -->

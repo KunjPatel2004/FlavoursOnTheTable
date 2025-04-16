@@ -9,11 +9,11 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12">
-                        <h2>Food Menu</h2>
+                        <h2>Login</h2>
                     </div>
                     <div class="col-12">
                         <a href="{{url('/')}}">Home</a>
-                        <a href="{{url('/available_cooks')}}">Menu</a>
+                        <a href="{{url('/customer/login')}}">Login</a>
                     </div>
                 </div>
             </div>
@@ -34,7 +34,7 @@
             <div class="card shadow-lg p-4">
                 <div class="text-center mb-3">
                     <h2 class="text-dark">Welcome Back!</h2>
-                    <p class="text-muted">Signin to continue</p>
+                    <p class="text-muted">Sign in to continue</p>
                 </div>
                 <p id="login-error"></p>
                 <form  id="loginForm" action="javascript:;" method="POST">@csrf

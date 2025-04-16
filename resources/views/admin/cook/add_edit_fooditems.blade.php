@@ -56,7 +56,7 @@
                   <div class="form-group col-md-6">
                     <label for="cook_id">Cook ID</label>
                     <input type="text" class="form-control" id="cook_id" name="cook_id" placeholder="Enter Cook Id"
-                    value="{{$fooditempage['cook_id']}}" >
+                    value="{{$fooditempage['cook_id']}}">
                   </div>
                   <div class="form-group col-md-6">
                     <label for="name" >Food Name</label>

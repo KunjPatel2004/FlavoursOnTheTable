@@ -23,17 +23,19 @@
         <div class="col-md-4 mb-4">
             <div class="card h-100 shadow-sm">
                 <img src="{{ asset('admin/images/fooditems/'.$food->image) }}" class="card-img-top" alt="{{ $food->name }}" style="width: 100%; height: 200px; object-fit: cover;">
-                <div class="card-body">
+                <div class="card-body d-flex flex-column justify-content-between">
+                <div>
                     <h5 class="card-title">{{ $food->name }}</h5>
                     <p class="card-text">{{ $food->description }}</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h6 class="text-success mb-0">₹{{ $food->price }}</h6>
-                    </div>
-                    <button class="add-to-cart btn btn-warning " 
-                        data-id="{{ $food->id }}">
+                </div>
+                
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <h6 class="text-success mb-0">₹{{ $food->price }}</h6>
+                    <button class="add-to-cart btn btn-warning " data-id="{{ $food->id }}">
                         Add to Cart
                     </button>
                 </div>
+            </div>
             </div>
         </div>
         @endforeach

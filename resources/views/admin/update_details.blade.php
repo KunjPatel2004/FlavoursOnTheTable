@@ -78,6 +78,12 @@
                       <input type="hidden" name="current_image" value="{{Auth::guard('admin')->user()->image}}">
                       @endif
                   </div>
+
+                  <div class="form-group">
+                    <label for="admin_address">Address</label>
+                    <input type="text" name="admin_address" class="form-control" id="admin_address" placeholder="Address"
+                    value= "{{Auth::guard('admin')->user()->home_address}}">
+                  </div>
                 
 
                 <div class="form-group">

@@ -16,34 +16,42 @@
             </div>
         </div>
 
-
-    <div class="container-fluid mt-4">
-       <div class="row mt-2">
-            @foreach($cooks as $cook)
-            <div class="col-md-4 mb-4">
-                <div class="card shadow-sm rounded-2xl">
-                    <img src="{{ asset('admin/images/carousel-1.jpg') }}"
-                     class="card-img-top" style="width: 100%; height: 300px; object-fit: cover;" alt="Food Image">
-                    <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="card-title m-0">{{ $cook->name }}'s Kitchen</h5>
+        <div class="container-fluid mt-4">
+    <div class="row mt-2">
+        @foreach($cooks as $cook)
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm rounded-2xl h-100">
+                <img src="{{ asset('admin/images/carousel-1.jpg') }}"
+                     class="card-img-top" 
+                     style="width: 100%; height: 300px; object-fit: cover;" 
+                     alt="Food Image">
+                <div class="card-body d-flex flex-column justify-content-between">
+                    
+                    <!-- Name + Category icon -->
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h5 class="card-title mb-0">{{ $cook->name }}'s Kitchen</h5>
                         <img src="{{ asset('front/img/' . ($cook->food_category == 'veg' ? 'veg.jpg' : ($cook->food_category == 'non-veg' ? 'non-veg.png' : 'both.png'))) }}" 
-                            alt="Food Category" width="20" height="20" class="ml-2">
+                             alt="Food Category" width="24" height="24" class="ms-2">
                     </div>
 
+                    <!-- Address + View Menu button -->
                     <div class="d-flex justify-content-between align-items-center">
-                        <span class="font-weight-bold">{{ $cook->home_address }}</span>
-                        <a href="{{ route('cooks.menu', $cook->id) }}" class="ml-3 text-decoration-none" style="color: #FBAF32; white-space: nowrap;">
+                        <p style="font-family:color: #333; font-size: 16px; margin-bottom: 0;">
+                            {{ $cook->home_address }}
+                        </p>
+                        <a href="{{ route('cooks.menu', $cook->id) }}" 
+                           class="btn btn-outline-warning btn-sm px-3 py-2" 
+                           style="white-space:nowrap; font-weight: 500;">
                             View Menu
                         </a>
                     </div>
 
-                       
-                    </div>                
-                </div>
+                </div>                
             </div>
-            @endforeach
         </div>
-   </div>
+        @endforeach
+    </div>
+</div>
+
          
 @endsection

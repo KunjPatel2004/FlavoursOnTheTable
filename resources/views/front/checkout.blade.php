@@ -6,11 +6,11 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12">
-                        <h2>Food Menu</h2>
+                        <h2>Checkout</h2>
                     </div>
                     <div class="col-12">
                         <a href="{{url('/')}}">Home</a>
-                        <a href="{{url('/available_cooks')}}">Menu</a>
+                        <a href="{{url('/cart')}}">Cart</a>
                     </div>
                 </div>
             </div>
