@@ -232,7 +232,7 @@ class AuthController extends Controller
             return redirect()->route('customer.addresses')->with('error', 'You can only have 3 addresses.');
         }
 
-        return view('front.customer.add_address');
+        return view('front.customer.add_address', ['address' => null]);
     }
 
     public function StoreAddress(Request $request)
