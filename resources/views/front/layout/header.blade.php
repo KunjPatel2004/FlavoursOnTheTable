@@ -11,6 +11,11 @@
                 <a href="{{ url('/') }}" class="nav-item nav-link {{ request()->is('/') ? 'active' : '' }}">Home</a>
                 <a href="{{ url('/about') }}" class="nav-item nav-link {{ request()->is('about') ? 'active' : '' }}">About</a>
                 <a href="{{ url('/available_cooks') }}" class="nav-item nav-link {{ request()->is('available_cooks') ? 'active' : '' }}">Menu</a>
+                <!-- Cart Icon with Badge -->
+                <a href="{{ route('cart') }}" class="nav-item nav-link position-relative {{ request()->is('cart') ? 'active' : '' }}">
+                    <i class="fas fa-shopping-bag"></i>
+                    View Cart
+                </a>
                 <a href="#" class="nav-link d-flex align-items-center"
                  id="accountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fas fa-user-circle me-1"></i>@if(Auth::check()){{Auth::user()->name}} @endif
@@ -50,11 +55,6 @@
                     </ul>
                 </div>
 
-                <!-- Cart Icon with Badge -->
-                <a href="{{ route('cart') }}" class="nav-item nav-link position-relative {{ request()->is('cart') ? 'active' : '' }}">
-                    <i class="fas fa-shopping-bag"></i>
-                    View Cart
-                </a>
             </div>
         </div>
     </div>

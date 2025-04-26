@@ -78,7 +78,7 @@ $(document).ready(function (){
 
       $.ajax({
        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-       url:'/customer/account',
+       url:'/customer/update_account',
        type:'post',
        data: formData,
        success:function(data){
@@ -95,6 +95,11 @@ $(document).ready(function (){
           }else if(data.type=="success"){
             $("#account-success").attr('style','color:green');
             $("#account-success").html(data.message);
+            setTimeout(function(){
+              $('#account-success').css({
+                  'display':'none'
+              })
+          }, 5000);
           }
        },error:function(){
         alert("Error");

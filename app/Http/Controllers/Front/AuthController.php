@@ -151,20 +151,13 @@ class AuthController extends Controller
             $data = $request->all();
 
             $validator = Validator::make($request->all(),[
-                'name' => 'required|string|max:150',
-                'address' => 'required|string|max:150',
-                'address_2' => 'nullable|string|max:255', 
-                'city' => 'required|string|max:150',
-                'state' => 'required|string|max:150',
-                'country' => 'required|string|max:150',
-                'pincode' => 'required|string|max:150',
+                'name' => 'required|string|max:150',            
                 'mobile' => 'required|numeric|digits:10',
             ]);
 
             if($validator->passes()){
                 User::where('id',Auth::user()->id)->update(['name'=>$data['name'],
-                'address'=>$data['address'],'city'=>$data['city'],'state'=>$data['state'],
-                'country'=>$data['country'],'pincode'=>$data['pincode'],'mobile'=>$data['mobile'],]);
+                'email'=>$data['email'],'mobile'=>$data['mobile'],]);
 
                 return response()->json(['status'=>true,'type'=>'success','message'=>'Your details are updated successfully!']);
 
@@ -231,7 +224,6 @@ class AuthController extends Controller
         if ($user->addresses->count() >= 2) {
             return redirect()->route('customer.addresses')->with('error', 'You can only have 3 addresses.');
         }
-
         return view('front.customer.add_address', ['address' => null]);
     }
 

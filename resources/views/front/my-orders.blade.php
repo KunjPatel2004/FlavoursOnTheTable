@@ -39,7 +39,7 @@
                     </p>
                     <p class="mb-1"><strong>Total Items:</strong> {{ $order->orderItems->sum('quantity') }}</p>
                     <p class="mb-1"><strong>Total Price:</strong> ₹{{ number_format($order->total_price, 2) }}</p>
-                    
+                    <p class="mb-1"><strong>Delivery Address:</strong> {{$order->address}}</p>
                     <button class="btn btn-outline-warning mt-2" type="button" data-toggle="collapse" data-target="#orderDetails{{ $order->id }}">
                         View Order Details
                     </button>
